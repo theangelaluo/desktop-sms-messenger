@@ -19,8 +19,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport stuff here
-
-
+// YOUR CODE HERE
 
 app.use('/', routes);
 

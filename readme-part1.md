@@ -145,7 +145,7 @@ earlier).
 - [`views/signup.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_161)
 - [`views/login.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_340)
 
-### User routes 🚥 - `routes/index.js`
+### User routes 🚥 - `routes/auth.js`
 
 - `GET /`
 	- If user logged in redirect to `/contacts`

@@ -181,8 +181,8 @@ earlier).
 ### Views for sending message 📬 - `views/newMessage.hbs`, `views/message.hbs`
 
 - [`views/newMessage.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_442) Send a new message
-- [`views/messages.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_230) View sent messages
-- 
+- [`views/messages.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_230)
+
 You will use `views/message.hbs` for both the Conversation Stream (all ingoing and outgoing messages) and the conversation with an individual person. 
 
 ### Routes for sending message 👮 - `routes/index.js`

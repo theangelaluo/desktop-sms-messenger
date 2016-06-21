@@ -7,14 +7,14 @@ mongoose.connect(connect);
 // are like your building!
 var contactSchema = mongoose.Schema({
     name: String,
-    phone: String
+    phone: String,
+    owner: String
 });
 
 var userSchema = mongoose.Schema({
   username: String,
   password: String
 });
-
 
 module.exports = {
     Contact: mongoose.model('Contact', contactSchema),

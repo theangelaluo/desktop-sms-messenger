@@ -7,8 +7,8 @@ var models = require('../models/models');
 module.exports = function(passport) {
 
   // GET registration page
-  router.get('/register', function(req, res) {
-    res.render('register');
+  router.get('/signup', function(req, res) {
+    res.render('signup');
   });
 
   // POST registration page
@@ -16,10 +16,10 @@ module.exports = function(passport) {
     return (userData.password === userData.passwordRepeat);
   };
 
-  router.post('/register', function(req, res) {
+  router.post('/signup', function(req, res) {
     // validation step
-    if (!validateReq(req)) {
-      res.render('/register', {
+    if (!validateReq(req.body)) {
+      return res.render('signup', {
         error: "Passwords don't match."
       });
     }

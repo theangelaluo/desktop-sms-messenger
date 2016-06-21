@@ -11,6 +11,7 @@
 - [Phase 5. Outgoing SMS](#phase-5-outgoing-sms)
 - [Phase 6. Delayed send](#phase-6-delayed-send)
 - [Phase 7. Incoming SMS](#phase-7-incoming-sms)
+- [Bonus](#bonus)
 
 ## Goal
 

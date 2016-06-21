@@ -123,4 +123,19 @@ router.post('/messages/send/:id', function(req, res, next) {
   });
 });
 
+router.post('/messages/receive', function(req, res, next) {
+  Contact.find({phone: req.body.From.substring(2)}, function(err, user) {
+    var message = new Message({
+      created: new Date(),
+      content: req.body.Body,
+      user: req.user._id,
+      to: req.user._id
+    });
+    message.save(function(err) {
+      if(err) return next(err);
+      res.send("Thanks Twilio <3");
+    });
+  });
+});
+
 module.exports = router;

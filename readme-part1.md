@@ -132,6 +132,7 @@ earlier).
 - New model `User`
 	- `username`: `String`: user name
 	- `password`: `String`: password
+	- `phone`: `String`: 10 digit phone number of the user. Used to associate incoming messages.
 - Update model `Contact`
 	- new property `owner`: `UserId`: `_id` of the user who created this contact 
 

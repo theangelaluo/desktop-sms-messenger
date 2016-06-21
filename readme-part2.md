@@ -12,7 +12,7 @@ you'll need to get started:
 - Sendgrid: a Sendgrid account (for sending and receiving email). You'll need a
   [Sendgrid API key](https://app.sendgrid.com/settings/api_keys).
 
-## Phase 6. Outgoing email
+## Phase 8. Outgoing email
 
 Let's add support for outgoing email as well. We're going to use Sendgrid as our
 email provider. Grab your [Sendgrid API
@@ -46,3 +46,9 @@ to account for:
   their Facebook account so that they can log in using Facebook in the future.
 - If a user wants to unlink their Facebook account.
 
+## BONUS
+
+- Allow sending messages to multiple users at once.
+- Create true multi-party "threading" functionality: if a user composes a
+  message to contacts A, B, and C, then if _any_ of those contacts responds to
+  the message, it goes to _everyone_ on the thread.

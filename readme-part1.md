@@ -2,6 +2,16 @@
 
 ## Contents
 
+- [Goal](#goal)
+- [Getting started](#getting-started)
+- [Phase 1. Data model](#phase-1-data-model)
+- [Phase 2. Passport local auth](#phase-2-passport-local-auth)
+- [Phase 3. Views](#phase-3-views)
+- [Phase 4. Create, edit contacts](#phase-4-create-edit-contacts)
+- [Phase 5. Outgoing SMS](#phase-5-outgoing-sms)
+- [Phase 6. Delayed send](#phase-6-delayed-send)
+- [Phase 7. Incoming SMS](#phase-7-incoming-sms)
+
 ## Goal
 
 In this exercise, you're going to build a basic personal relationship manager
@@ -83,7 +93,9 @@ they connect, but at a bare minimum you're going to need two: one main
 one "contact" view that lets you view the message flow for each contact/send
 messages to that contact.
 
-Create these views, and try populating them with sample data for now.
+Create these views, and try populating them with sample data for now. Note that
+jQuery and Bootstrap have been included for you already (see `views/layout.hbs`)
+in case you want to use these in your views.
 
 ## Phase 4. Create, edit contacts
 
@@ -128,9 +140,5 @@ one-directional! We need to set up a Twilio webhook to do this.
   [Horizonstarter AJAX].
 - Make message send happen via AJAX, and make incoming messages show up in
   (quasi) real time using AJAX, as in [Horizonstarter AJAX].
-- Allow sending messages to multiple users at once.
-- Create true multi-party "threading" functionality: if a user composes a
-  message to contacts A, B, and C, then if _any_ of those contacts responds to
-  the message, it goes to _everyone_ on the thread.
 
 [Horizonstarter AJAX]: https://github.com/horizons-school-of-technology/week03/tree/master/day5/horizonstarter-ajax

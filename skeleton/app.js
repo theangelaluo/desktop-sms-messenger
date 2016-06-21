@@ -23,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // YOUR CODE HERE
 
 app.use('/', routes);
-app.use('/', auth);
+app.use('/', auth(passport));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

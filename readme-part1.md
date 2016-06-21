@@ -28,6 +28,8 @@ your Mongo connection string as you have done before.
 module.exports = "MONGO CONNECTION STRING HERE";
 ```
 
+See [user interface drawings](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit?usp=sharing).
+
 ## Step 1: Create and edit contacts
 
 ### Contact Models 👯 - `models/models.js`

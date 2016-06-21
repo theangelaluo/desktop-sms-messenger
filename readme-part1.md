@@ -179,7 +179,9 @@ earlier).
 ### Views for sending message 📬 - `views/newMessage.hbs`, `views/message.hbs`
 
 - [`views/newMessage.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_442) Send a new message
-- [`views/messages.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_230) Views sent messages
+- [`views/messages.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_230) View sent messages
+- 
+You will use `views/message.hbs` for both the Conversation Stream (all ingoing and outgoing messages) and the conversation with an individual person. 
 
 ### Routes for sending message 👮 - `routes/index.js`
 
@@ -369,11 +371,10 @@ It will open a new page that looks like the image below. Click **Add a new job**
 That's it! You can test to make sure that your route for delayed messages is working by manually calling `node schedule.js`, which will request the route `/messages/sendScheduled` on your server. 
 
 
-## Bonus
+## Getting portfolio ready (a bonus you should try!)
 
-- Add AJAX-based sorting of the contact list/table on the main page, as in
-  [Horizonstarter AJAX].
-- Make message send happen via AJAX, and make incoming messages show up in
-  (quasi) real time using AJAX, as in [Horizonstarter AJAX].
+If you really want to start making this project one that is user-ready (and therefore portfolio ready), we would recommend the following (in prioritized order):
 
-[Horizonstarter AJAX]: https://github.com/horizons-school-of-technology/week03/tree/master/day5/horizonstarter-ajax
+- [Send Messages via AJAX!] (https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g11476959af_5_380)
+- [Send / Schedules messages in bulk to many users at a time!] (https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g11476959af_5_167)
+- [Make your Conversation Stream "real-time". Use Ajax to update the stream every 30 seconds!] (https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g11476959af_5_395)

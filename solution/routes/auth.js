@@ -2,15 +2,14 @@
 
 var express = require('express');
 var router = express.Router();
-var models = {
-  User: require('../models/User')
-}
+var models = require('../models/models');
+var fromPhone = process.env.FROM_PHONE;
 
 module.exports = function(passport) {
 
   // GET registration page
-  router.get('/register', function(req, res) {
-    res.render('register');
+  router.get('/signup', function(req, res) {
+    res.render('signup');
   });
 
   // POST registration page
@@ -18,16 +17,17 @@ module.exports = function(passport) {
     return (userData.password === userData.passwordRepeat);
   };
 
-  router.post('/register', function(req, res) {
+  router.post('/signup', function(req, res) {
     // validation step
-    if (!validateReq(req)) {
-      res.render('/register', {
+    if (!validateReq(req.body)) {
+      return res.render('signup', {
         error: "Passwords don't match."
       });
     }
     var u = new models.User({
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      phone: fromPhone
     });
     u.save(function(err, user) {
       if (err) {

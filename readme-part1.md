@@ -195,7 +195,9 @@ You will use `views/message.hbs` for both the Conversation Stream (all ingoing a
 - `POST /messages/send/:contactId`
 	- Send message with Twilio to the number corresponding to a contact by `contactId`
 	- Create message in mongoose if Twilio is successful
-	- Reditect to `/messages`
+	- Redirect to `/messages`
+	
+For `POST /messages/send/:contactId`, you'll have to use [Twilio's Node client](https://www.npmjs.com/package/twilio) - remember from today? Don't forget to `npm i -S twilio` and to include your `accountSid` and `authToken`. See more documentation on Twilio's Node package here: [https://www.twilio.com/docs/api/rest/sending-messages](https://www.twilio.com/docs/api/rest/sending-messages)
 
 ## Step 4: Receiving Text Messages by Webhooks
 

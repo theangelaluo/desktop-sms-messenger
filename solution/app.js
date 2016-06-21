@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session')
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -24,12 +25,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport stuff here
 
+app.use(session({secret: process.env.SECRET}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
+  models.User.findById(id, function(err, user) {
     done(err, user);
   });
 });
@@ -58,11 +63,9 @@ passport.use(new LocalStrategy(function(username, password, done) {
   }
 ));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use('/', routes);
 app.use('/', auth(passport));
+app.use('/', routes);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

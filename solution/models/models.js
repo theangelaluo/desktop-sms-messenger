@@ -6,9 +6,9 @@ mongoose.connect(connect);
 // Remember: schemas are like your blueprint, and models
 // are like your building!
 var contactSchema = mongoose.Schema({
-    name: String,
-    phone: String,
-    owner: String
+  name: String,
+  phone: String,
+  owner: String
 });
 
 var userSchema = mongoose.Schema({
@@ -16,7 +16,15 @@ var userSchema = mongoose.Schema({
   password: String
 });
 
+var messageSchema = mongoose.Schema({
+  created: Date,
+  content: String,
+  user: String,
+  to: String
+});
+
 module.exports = {
     Contact: mongoose.model('Contact', contactSchema),
-    User: mongoose.model('User', userSchema)
+    User: mongoose.model('User', userSchema),
+    Message: mongoose.model('Message', messageSchema)
 };

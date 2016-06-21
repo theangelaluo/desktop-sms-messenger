@@ -17,8 +17,8 @@ router.post('/messages/receive', function(req, res, next) {
       var message = new Message({
         created: new Date(),
         content: req.body.Body,
-        user: user._id,
-        contact: contact._id
+        user: user.id,
+        contact: contact.id
       });
       message.save(function(err) {
         if(err) return next(err);

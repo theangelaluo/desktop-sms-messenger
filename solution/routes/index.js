@@ -11,6 +11,7 @@ var User = models.User;
 
 router.post('/messages/receive', function(req, res, next) {
   User.find({phone: fromPhone.substring(2)}, function(err, user) {
+    if(err) return next(err);
     var message = new Message({
       created: new Date(),
       content: req.body.Body,

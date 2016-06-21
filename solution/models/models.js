@@ -13,14 +13,15 @@ var contactSchema = mongoose.Schema({
 
 var userSchema = mongoose.Schema({
   username: String,
-  password: String
+  password: String,
+  phone: String
 });
 
 var messageSchema = mongoose.Schema({
   created: Date,
   content: String,
   user: String,
-  to: String
+  contact: String
 });
 
 module.exports = {

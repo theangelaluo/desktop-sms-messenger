@@ -5,17 +5,17 @@ var fromPhone = process.env.FROM_PHONE;
 var twilio = require('twilio')(accountSid, authToken);
 var router = express.Router();
 var models = require('../models/models');
-var _ = require('underscore');
 var Contact = models.Contact;
 var Message = models.Message;
+var User = models.User;
 
 router.post('/messages/receive', function(req, res, next) {
-  Contact.find({phone: req.body.From.substring(2)}, function(err, user) {
+  User.find({phone: fromPhone}, function(err, user) {
     var message = new Message({
       created: new Date(),
       content: req.body.Body,
-      user: req.user._id,
-      to: req.user._id
+      user: user._id,
+      contact: user.phone
     });
     message.save(function(err) {
       if(err) return next(err);
@@ -82,14 +82,8 @@ router.post('/contacts/:id', function(req, res, next) {
 router.get('/messages', function(req, res, next) {
   Message.find({user: req.user._id}, function(err, messages) {
     if (err) return next(err);
-    // var messagesGroupedByTo = _.groupBy(messages, function(message) {
-    //   return message.to;
-    // });
     res.render('messages', {
       messages: messages
-      // messages: _.mapObject(messagesGroupedByTo, function(messageArray) {
-      //   return messageArray[0];
-      // })
     });
   });
 });
@@ -97,7 +91,7 @@ router.get('/messages', function(req, res, next) {
 router.get('/messages/:id', function(req, res, next) {
   Contact.findById(req.params.id, function(err, contact) {
     if (err) return next(err);
-    Message.find({user: req.user._id, to: req.params.id}, function(err, messages) {
+    Message.find({user: req.user._id, contact: req.params.id}, function(err, messages) {
       if (err) return next(err);
       res.render('messages', {
         messages: messages,
@@ -109,18 +103,18 @@ router.get('/messages/:id', function(req, res, next) {
 });
 
 router.get('/messages/send/:id', function(req, res, next) {
-  Contact.findById(req.params.id, function(err, user) {
+  Contact.findById(req.params.id, function(err, contact) {
     res.render('newMessage', {
-      contact: user
+      contact: contact
     });
   });
 });
 
 router.post('/messages/send/:id', function(req, res, next) {
-  Contact.findById(req.params.id, function(err, user) {
+  Contact.findById(req.params.id, function(err, contact) {
     if (err) return next(err);
     twilio.messages.create({
-      to: "+1" + user.phone,
+      to: "+1" + contact.phone,
       from: fromPhone,
       body: req.body.message
     }, function(err, message) {
@@ -129,7 +123,7 @@ router.post('/messages/send/:id', function(req, res, next) {
         created: new Date(),
         content: req.body.message,
         user: req.user._id,
-        to: user._id
+        contact: contact._id
       });
       message.save(function(err) {
         if(err) return next(err);

@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/models');
+var fromPhone = process.env.FROM_PHONE;
 
 module.exports = function(passport) {
 
@@ -25,7 +26,8 @@ module.exports = function(passport) {
     }
     var u = new models.User({
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      phone: fromPhone
     });
     u.save(function(err, user) {
       if (err) {

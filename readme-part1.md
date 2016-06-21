@@ -190,9 +190,11 @@ You will use `views/message.hbs` for both the Conversation Stream (all ingoing a
 - `GET /messages/:contactId`
 	- Read messages sent to contactId
 	- Render `messages.hbs` with messages sent to contact
-- `POST /messages/send`
-	- Send message Twillio
-	- Create message in mongoose if twillio is successful
+- `GET /messages/send/:contactId`
+  - Render `newMessage.hbs` for a form to send a message to a contact by `contactId`
+- `POST /messages/send/:contactId`
+	- Send message with Twilio to the number corresponding to a contact by `contactId`
+	- Create message in mongoose if Twilio is successful
 	- Reditect to `/messages`
 
 ## Step 4: Receiving Text Messages by Webhooks

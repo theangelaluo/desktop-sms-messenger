@@ -170,7 +170,7 @@ earlier).
 	-  `created`: `Date`: when the messages was first created
 	- `content`: `String`: content of the message
 	- `user`: `UserId`: the `_id` of the User this message belongs to
-	- `to`: `ContactId`: the `_id` of the Contact the message was sent to
+	- `contact`: `ContactId`: the `_id` of the Contact the message was sent to (or from for incoming)
 
 ### Views for sending message 📬 - `views/newMessage.hbs`, `views/message.hbs`
 

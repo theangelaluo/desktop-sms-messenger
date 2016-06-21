@@ -10,15 +10,15 @@ var Message = models.Message;
 var User = models.User;
 
 router.post('/messages/receive', function(req, res, next) {
-  User.find({phone: fromPhone.substring(2)}, function(err, user) {
-    Contact.find({phone: req.body.From.substring(2)}, function(err, contact) {
+  User.findOne({phone: fromPhone.substring(2)}, function(err, user) {
+    Contact.findOne({phone: req.body.From.substring(2)}, function(err, contact) {
       console.log(user, contact);
       if(err) return next(err);
       var message = new Message({
         created: new Date(),
         content: req.body.Body,
-        user: user._id.toString(),
-        contact: user._id.toString()
+        user: user._id,
+        contact: contact._id
       });
       message.save(function(err) {
         if(err) return next(err);

@@ -7,6 +7,4 @@ var schema = mongoose.Schema({
   phone: String
 });
 
-module.exports = {
-  User: mongoose.model('Contact', schema)
-};
+module.exports = mongoose.model('Contact', schema);

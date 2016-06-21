@@ -9,6 +9,4 @@ var schema = mongoose.Schema({
   timestamp: Date
 });
 
-module.exports = {
-  User: mongoose.model('Message', schema)
-};
+module.exports = mongoose.model('Message', schema);

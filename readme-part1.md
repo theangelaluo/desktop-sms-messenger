@@ -3,11 +3,11 @@
 ## Contents
 
 - [Goal](#goal)
-- Step 1. Create and edit contacts
-- Step 2: User accounts and login
-- Step 3: Sending a text message to a contact
-- Step 4: Receiving text messages by webhooks
-- Step 5: Schedule text messages to send
+- [Step 1. Create and edit contacts](#step-1-create-and-edit-contacts)
+- [Step 2: User accounts and login](#step-2-user-accounts-and-login)
+- [Step 3: Sending a text message to a contact](#step-3-sending-a-text-message-to-a-contact)
+- [Step 4: Receiving text messages by webhooks](#step-4-receiving-text-messages-by-webhooks)
+- [Step 5: Schedule text messages to send](#step-5-scheduling)
 - [Bonus](#bonus)
 
 ## Goal
@@ -166,7 +166,7 @@ earlier).
 	- If successful redirect to `/contacts`
 	- If unsuccessful redirect to `/login`
 
-## Step: Sending a text message to a contact
+## Step 3: Sending a text message to a contact
 
 ### Models for sending message ✉️ - `models/models.js`
 

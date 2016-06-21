@@ -65,7 +65,12 @@ Go ahead and create other model classes in `models/` as necessary.
 With your data model in place, the next step is to get login and accounts
 working with Passport's LocalStrategy. You did this as part of the
 [Passport-Form](https://github.com/horizons-school-of-technology/week04/tree/master/day1/passport_form)
-exercise yesterday.
+exercise yesterday so we won't go over it in detail again. Go ahead and add the
+middleware, configuration, and routes you need to get Passport local auth
+working (username and password). Remember to `npm install` the necessary
+modules, to install the middleware and add the configuration to `app.js`, to
+connect this to the `User` model you created in the last phase, and to add the
+auth-related routes in `routes/auth.js` as you did in the previous project.
 
 ## Phase 3. Views
 
@@ -78,7 +83,7 @@ they connect, but at a bare minimum you're going to need two: one main
 one "contact" view that lets you view the message flow for each contact/send
 messages to that contact.
 
-Create these views now, and try populating them with sample data for now.
+Create these views, and try populating them with sample data for now.
 
 ## Phase 4. Create, edit contacts
 

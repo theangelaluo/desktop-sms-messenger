@@ -81,12 +81,15 @@ earlier).
 1. Install `passport` and `passport-local`
 
 	```bash
-	npm install --save passport passport-local
+	npm install --save passport passport-local express-session
 	```
 
 1. Create your local strategy **before** your routes:
 
 	```javascript
+	var session = require('express-session');
+	app.use(session({ secret: 'keyboard cat' }));
+
 	// Tell Passport how to set req.user
 	passport.serializeUser(function(user, done) {
 	  done(null, user._id);

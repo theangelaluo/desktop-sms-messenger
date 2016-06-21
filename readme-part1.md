@@ -371,7 +371,7 @@ It will open a new page that looks like the image below. Click **Add a new job**
 That's it! You can test to make sure that your route for delayed messages is working by manually calling `node schedule.js`, which will request the route `/messages/sendScheduled` on your server. 
 
 
-## Getting portfolio ready (a bonus you should try!)
+## Getting portfolio-ready (a bonus you should try!)
 
 If you really want to start making this project one that is user-ready (and therefore portfolio ready), we would recommend the following (in prioritized order):
 

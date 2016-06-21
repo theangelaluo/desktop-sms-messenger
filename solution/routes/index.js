@@ -1,6 +1,7 @@
 var express = require('express');
-var connect = require('./connect');
-var twilio = require('twilio')(connect.accountSid, connect.authToken);
+var accountSid = process.env.ACCOUNT_SID;
+var authToken = process.env.AUTH_TOKEN;
+var twilio = require('twilio')(accountSid, authToken);
 var router = express.Router();
 var models = require('../models/models');
 var _ = require('underscore');

@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var connect = require('./connect') || process.env.MONGODB_URI;
+var connect = process.env.MONGODB_URI || require('./connect');
 mongoose.connect(connect);
 
 // Step 1: Create and edit contacts

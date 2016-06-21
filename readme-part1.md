@@ -259,7 +259,7 @@ Twilio will POST a request to your backend with data that will be formatted as f
 
 ### Setting up Twilio
 
-⚠️ _**Note**: This section requires that you have deployed your branch to a new Heroku dyno.
+> ⚠️ _**Note**: This section requires that you have deployed your branch to a new Heroku dyno.
 We will be walking through the deployment process, but you can try this yourself if you get here by
 following [these instructions](https://devcenter.heroku.com/articles/git) for deploying from a branch -
 don't deploy from `master`! Make sure you have the [Heroku Toolbelt](https://toolbelt.heroku.com)!._
@@ -269,7 +269,7 @@ This requires some Twilio setup beforehand - we'll walk you through that below:
     
 ### Creating your Twilio Number 📞 - `twilio.com`  
 
-⚠️ _**Note:** You may have already have a number from a previous exercise. If that's the case, skip down to Registering
+> ⚠️ _**Note:** You may have already have a number from a previous exercise. If that's the case, skip down to Registering
 a Webhook._
 
 Get started by logging into [Twilio](https://twilio.com) and going to your Console (the Twilio user dashboard). 

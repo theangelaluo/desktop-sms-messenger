@@ -74,7 +74,7 @@ earlier).
 
 ## Step 2: User accounts and login
 
-### Setting up `passport` 🛂 - `The Command Line`
+### Setting up `passport` 🛂 - `app.js`
 
 1. Install `passport` and `passport-local`
 

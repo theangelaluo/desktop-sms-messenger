@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var findOrCreate = require('mongoose-findorcreate');
 var connect = process.env.MONGODB_URI || require('./connect');
 mongoose.connect(connect);
 
@@ -14,8 +15,10 @@ var contactSchema = mongoose.Schema({
 var userSchema = mongoose.Schema({
   username: String,
   password: String,
-  phone: String
+  phone: String,
+  facebookId: String
 });
+userSchema.plugin(findOrCreate);
 
 var messageSchema = mongoose.Schema({
   created: Date,

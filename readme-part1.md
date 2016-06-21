@@ -67,7 +67,7 @@ earlier).
 - `GET /contacts/:id`
 	- Read contact with id from mongoose
 	- Render `editContact.hbs` with contact
-- `POST /contacts`
+- `POST /contacts/new`
 	- Create new contact
 	- Redirect to /contacts
 - `POST /contacts/:id`

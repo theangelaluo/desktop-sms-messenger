@@ -3,8 +3,11 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
 
 var routes = require('./routes/index');
+var auth = require('./routes/auth');
 
 var app = express();
 
@@ -19,10 +22,46 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport stuff here
-// YOUR CODE HERE
+
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+// passport strategy
+passport.use(new LocalStrategy(function(username, password, done) {
+    // Find the user with the given username
+    User.findOne({ username: username }, function (err, user) {
+      // if there's an error, finish trying to authenticate (auth failed)
+      if (err) {
+        console.error(err);
+        return done(err);
+      }
+      // if no user present, auth failed
+      if (!user) {
+        console.log(user);
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      // if passwords do not match, auth failed
+      if (user.password !== password) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      // auth has has succeeded
+      return done(null, user);
+    });
+  }
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
-
+app.use('/', auth(passport));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

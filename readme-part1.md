@@ -145,7 +145,7 @@ earlier).
 - [`views/signup.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_161)
 - [`views/login.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_340)
 
-### User routes 🚥 - `routes/index.js`
+### User routes 🚥 - `routes/auth.js`
 
 - `GET /`
 	- If user logged in redirect to `/contacts`
@@ -179,7 +179,9 @@ earlier).
 ### Views for sending message 📬 - `views/newMessage.hbs`, `views/message.hbs`
 
 - [`views/newMessage.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_442) Send a new message
-- [`views/messages.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_230) Views sent messages
+- [`views/messages.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_230) View sent messages
+- 
+You will use `views/message.hbs` for both the Conversation Stream (all ingoing and outgoing messages) and the conversation with an individual person. 
 
 ### Routes for sending message 👮 - `routes/index.js`
 
@@ -259,7 +261,7 @@ Twilio will POST a request to your backend with data that will be formatted as f
 
 ### Setting up Twilio
 
-⚠️ _**Note**: This section requires that you have deployed your branch to a new Heroku dyno.
+> ⚠️ _**Note**: This section requires that you have deployed your branch to a new Heroku dyno.
 We will be walking through the deployment process, but you can try this yourself if you get here by
 following [these instructions](https://devcenter.heroku.com/articles/git) for deploying from a branch -
 don't deploy from `master`! Make sure you have the [Heroku Toolbelt](https://toolbelt.heroku.com)!._
@@ -269,7 +271,7 @@ This requires some Twilio setup beforehand - we'll walk you through that below:
     
 ### Creating your Twilio Number 📞 - `twilio.com`  
 
-⚠️ _**Note:** You may have already have a number from a previous exercise. If that's the case, skip down to Registering
+> ⚠️ _**Note:** You may have already have a number from a previous exercise. If that's the case, skip down to Registering
 a Webhook._
 
 Get started by logging into [Twilio](https://twilio.com) and going to your Console (the Twilio user dashboard). 
@@ -336,7 +338,7 @@ To test scheduling locally:
 
 ### Setting Up Scheduling with Heroku ⛑ - `heroku.com`
 
-⚠️ _**Note**: This section requires that you have deployed your branch to a new Heroku dyno.
+> ⚠️ _**Note**: This section requires that you have deployed your branch to a new Heroku dyno.
 We will be walking through the deployment process, but you can try this yourself if you get here by
 following [these instructions](https://devcenter.heroku.com/articles/git) for deploying from a branch -
 don't deploy from `master`! Make sure you have the [Heroku Toolbelt](https://toolbelt.heroku.com)!._
@@ -353,20 +355,26 @@ Click **Install Heroku Scheduler** and select your dyno (sorry, we took the name
 
 <img src="http://cl.ly/3E2E3m042d0m/Image%202016-06-21%20at%208.21.28%20AM.png" width="500">
 
-You will now be 
+You will now be redirected to the Heroku Dashboard for your dyno. Go to the Resources tab and under the Add-ons section, click Scheduler. 
 
 <img src="http://cl.ly/0h3r0P3s2A01/Image%202016-06-21%20at%208.23.44%20AM.png" width="500"> 
 
+It will open a new page that looks like the image below. Click **Add a new job** and set  the command to `node schedule.js`.
+
+
 <img src="http://cl.ly/2u1y321A0Y1Y/Image%202016-06-21%20at%208.23.54%20AM.png" width="500">
+
+**Set the frequency to Hourly!** You want to be checking fairly frequently for messages that need to be sent from the delayed queue. 
 
 <img src="http://cl.ly/0i2I120v2j0x/Image%202016-06-21%20at%208.24.26%20AM.png" width="500">
 
+That's it! You can test to make sure that your route for delayed messages is working by manually calling `node schedule.js`, which will request the route `/messages/sendScheduled` on your server. 
 
-## Bonus
 
-- Add AJAX-based sorting of the contact list/table on the main page, as in
-  [Horizonstarter AJAX].
-- Make message send happen via AJAX, and make incoming messages show up in
-  (quasi) real time using AJAX, as in [Horizonstarter AJAX].
+## Getting portfolio ready (a bonus you should try!)
 
-[Horizonstarter AJAX]: https://github.com/horizons-school-of-technology/week03/tree/master/day5/horizonstarter-ajax
+If you really want to start making this project one that is user-ready (and therefore portfolio ready), we would recommend the following (in prioritized order):
+
+- [Send Messages via AJAX!] (https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g11476959af_5_380)
+- [Send / Schedules messages in bulk to many users at a time!] (https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g11476959af_5_167)
+- [Make your Conversation Stream "real-time". Use Ajax to update the stream every 30 seconds!] (https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g11476959af_5_395)

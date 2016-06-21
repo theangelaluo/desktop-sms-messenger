@@ -78,7 +78,7 @@ earlier).
 
 ### Setting up `passport` 🛂 - `app.js`
 
-1. Install `passport` and `passport-local`
+1. Install `passport` `passport-local` and `express-session`
 
 	```bash
 	npm install --save passport passport-local express-session

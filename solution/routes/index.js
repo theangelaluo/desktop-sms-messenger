@@ -1,6 +1,7 @@
 var express = require('express');
 var accountSid = process.env.ACCOUNT_SID;
 var authToken = process.env.AUTH_TOKEN;
+var fromPhone = process.env.FROM_PHONE;
 var twilio = require('twilio')(accountSid, authToken);
 var router = express.Router();
 var models = require('../models/models');
@@ -106,7 +107,7 @@ router.post('/messages/send/:id', function(req, res, next) {
     if (err) return next(err);
     twilio.messages.create({
       to: "+1" + user.phone,
-      from: connect.fromPhone,
+      from: fromPhone,
       body: req.body.message
     }, function(err, message) {
       if (err) return next(err);

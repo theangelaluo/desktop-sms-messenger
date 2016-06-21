@@ -82,13 +82,6 @@ earlier).
 	npm install --save passport passport-local
 	```
 
-1. Add `passport` and `LocalStrategy` to your `app.js` file
-
-	```javascript
-	var passport = require('passport');
-	var LocalStrategy = require('passport-local').Strategy;
-	```
-
 1. Create your local strategy **before** your routes:
 
 	```javascript

@@ -127,20 +127,83 @@ with Facebook", linking to `/auth/facebook`. We'll let you handle that part!
 ## Step 7. Outgoing email
 
 Let's add support for outgoing email as well. We're going to use Sendgrid as our
-email provider. Grab your [Sendgrid API
-key](https://app.sendgrid.com/settings/api_keys) and install the
-[sendgrid-nodejs](https://github.com/sendgrid/sendgrid-nodejs) package.
+email provider. If you haven't set up a Sendgrid account yet, follow the
+instructions in the [Sendgrid inline
+exercise](https://github.com/horizons-school-of-technology/week04/tree/master/day2/sendgrid)
+to set one up now.
 
-As with Twilio, we'll need a user's Sendgrid API key to send and receive
-messages on their behalf.
+Grab your [Sendgrid API
+key](https://app.sendgrid.com/settings/api_keys) and install the
+[sendgrid-nodejs](https://github.com/sendgrid/sendgrid-nodejs) package. As with
+Twilio, we'll need a user's Sendgrid API key to send and receive messages on
+their behalf.
+
+You'll need to make a couple of changes to your data model to support sending
+email:
+
+- A Contact should have an email address
+- A Message should have a channel ("email" or "sms")
+
+You'll also need to make a few cosmetic changes to your app's views:
+
+- In the edit contact view, you'll need to add a field for an email address.
+- In the contacts view, you'll need to add a column to display contacts' email
+  addresses.
+- In the messages view, you'll need to display which channel a message was sent
+  or received on.
+- In the new message view, you'll need to add a selector, such as a radio button
+  (`<input type="radio"...>`) to select the channel to send the message on.
+
+You'll need to add a couple of environment variables, one for your sendgrid API
+key, the other for the "from" email address that sendgrid should use when
+sending email (you'll want to use something '@' yourdomain.joinhorizons.com e.g.
+'lane@lane.joinhorizons.com'--the part before the '@' symbol doesn't matter!).
+
+Finally, and most substantially, you'll need to add code in your `POST
+/messages/send` route that reads the `channel` argument from the form and routes
+your message accordingly, via SMS or email. You should use the sample code at
+[sendgrid-nodejs](https://github.com/sendgrid/sendgrid-nodejs) to write the
+sendgrid code. Make sure you read the API key and from email address from the
+environment.
 
 
 ## Step 8. Incoming email
 
 We'll be using the [Sendgrid Inbound parse
 webhook](https://sendgrid.com/docs/API_Reference/Webhooks/parse.html) to receive
-incoming messages. Set up the webhook, and set up an endpoint that Sendgrid can
-call when it receives an incoming message.
+incoming messages.
+
+You'll need to install another npm module for this, called
+[multer](https://github.com/expressjs/multer), to receive the form data sendgrid
+will send you (which comes in a slightly different format).
+
+Create a webhook to receive incoming email at e.g. `/messages/receive_email` to
+complement the existing incoming SMS webhook. Per the multer readme, you should
+use this format to create the webhook:
+
+```javascript
+router.post('/messages/receive_email', upload.array(), function(req, res, next) {
+  // Your code here
+  // Incoming email data in req.body
+});
+
+```
+
+Next, configure the webhook on sendgrid. Log into your Sendgrid account at
+https://app.sendgrid.com/, then tap Settings on the left bar, then Inbound Parse
+from the dropdown menu.  Click "Add Host & URL" at the top right corner:
+
+![add host](http://cl.ly/253d2X0h1J3K/Image%202016-06-22%20at%2000.45.57.png)
+
+Under hostname, enter the `name.joinhorizons.com` subdomain that you were given.
+Under URL, enter the Heroku URL for your app including the path to the webhook.
+You can leave the other two options unchecked:
+
+![add host 2](http://cl.ly/1e2z0y1v1d1g/Image%202016-06-22%20at%2000.46.59.png)
+
+Click Save. Now try sending an email to this subdomain. The part before the '@'
+symbol doesn't matter. An email sent to any address
+'@yourdomain.joinhorizons.com' should cause the webhook to fire. Give it a shot!
 
 
 ## BONUS

@@ -107,10 +107,10 @@ Add the following routes to your `routes/auth.js` file to allow
 Facebook authentication:
 
 ```javascript
-app.get('/auth/facebook',
+router.get('/auth/facebook',
   passport.authenticate('facebook'));
 
-app.get('/auth/facebook/callback',
+router.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.

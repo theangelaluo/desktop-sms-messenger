@@ -63,7 +63,7 @@ enter:
 
     http://localhost:3000
 
-and hit Next;
+and hit Next.
 
 ![site URL](http://cl.ly/0a2B1E141Q1V/Image%202016-06-21%20at%2019.16.24.png)
 

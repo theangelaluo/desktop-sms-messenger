@@ -9,6 +9,7 @@ mongoose.connect(connect);
 var contactSchema = mongoose.Schema({
   name: String,
   phone: String,
+  email: String,
   owner: String
 });
 
@@ -24,7 +25,8 @@ var messageSchema = mongoose.Schema({
   created: Date,
   content: String,
   user: String,
-  contact: String
+  contact: String,
+  channel: String
 });
 
 module.exports = {

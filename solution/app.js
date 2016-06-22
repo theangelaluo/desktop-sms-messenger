@@ -14,7 +14,7 @@ var auth = require('./routes/auth');
 
 // Make sure we have all required env vars. If these are missing it can lead
 // to confusing, unpredictable errors later.
-var REQUIRED_ENV = "FROM_PHONE TWILIO_ACCOUNT_SID TWILIO_AUTH_TOKEN SECRET FB_CLIENT_ID FB_CLIENT_SECRET callbackURL".split(" ");
+var REQUIRED_ENV = "FROM_PHONE TWILIO_ACCOUNT_SID TWILIO_AUTH_TOKEN SECRET FB_CLIENT_ID FB_CLIENT_SECRET callbackURL SENDGRID_API_KEY FROM_EMAIL".split(" ");
 REQUIRED_ENV.forEach(function(el) {
   if (!process.env[el])
     throw new Error("Missing required env var " + el);

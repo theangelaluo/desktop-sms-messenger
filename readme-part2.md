@@ -4,6 +4,12 @@
 
 ## Contents
 
+- [Goal](#goal)
+- [Step 6. Facebook login](#step-6-facebook-login)
+- [Step 7. Outgoing email](#step-7-outgoing-email)
+- [Step 8. Incoming email](#step-8-incoming-email)
+- [BONUS](#bonus)
+
 ## Goal
 
 In Part 2, you're going to add some awesome new features and functionality to
@@ -11,14 +17,6 @@ your Double Message app:
 
 - Facebook login (using OAuth)
 - Send and receive email (using Sendgrid)
-
-## Getting started
-
-Work with the scaffolding in the `skeleton` folder. Here are the other things
-you'll need to get started:
-
-- Sendgrid: a Sendgrid account (for sending and receiving email). You'll need a
-  [Sendgrid API key](https://app.sendgrid.com/settings/api_keys).
 
 ## Step 6. Facebook login
 

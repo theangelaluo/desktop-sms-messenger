@@ -43,7 +43,7 @@ Then tap My Apps at the top right corner, and then Add a New App:
 
 ![My apps](http://cl.ly/1S3I0e2B1e0e/Image%202016-06-21%20at%2019.07.05.png)
 
-Select Website as the platform:
+After selecting "Add Product" and then "Facebook Login" proceed by choosing Website as the platform:
 
 ![Platform](http://cl.ly/1t3T2M1w3H06/Image%202016-06-21%20at%2019.07.16.png)
 

@@ -21,8 +21,8 @@ able to send, receive and schedule text messages from your browser!
 Tomorrow we'll add Facebook authentication using OAuth and a few other features
  in [Part 2](./readme-part2.md).
 
-You will be working in the `skeleton` folder. Make sure you create `models/connect.js` with
-your Mongo connection string as you have done before.
+You will be working in the `double-message` folder. Make sure you create
+`models/connect.js` with your Mongo connection string as you have done before.
 
 ```javascript
 module.exports = "MONGO CONNECTION STRING HERE";

@@ -42,10 +42,6 @@ into your Facebook account if necessary):
 Then tap My Apps at the top right corner, and then Add a New App:
 
 ![My apps](http://cl.ly/1S3I0e2B1e0e/Image%202016-06-21%20at%2019.07.05.png)
-![Create a new app](https://www.dropbox.com/s/gfsuhbjqkgapc5h/Screenshot%202017-02-08%2011.18.06.png?dl=0)
-After selecting "Add Product" and then "Facebook Login" proceed by choosing Website as the platform:
-
-![Platform](http://cl.ly/1t3T2M1w3H06/Image%202016-06-21%20at%2019.07.16.png)
 
 Enter a name such as "Double Message" and tap Create New Facebook App ID:
 
@@ -62,6 +58,12 @@ enter:
     http://localhost:3000
 
 and hit Next.
+
+
+After selecting "Add Product" and then "Facebook Login" proceed by choosing Website as the platform:
+
+![Platform](http://cl.ly/1t3T2M1w3H06/Image%202016-06-21%20at%2019.07.16.png)
+
 
 ![site URL](http://cl.ly/0a2B1E141Q1V/Image%202016-06-21%20at%2019.16.24.png)
 

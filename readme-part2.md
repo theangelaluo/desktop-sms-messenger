@@ -65,10 +65,6 @@ After selecting "Add Product" and then "Facebook Login" proceed by choosing Webs
 
 ![site URL](http://cl.ly/0a2B1E141Q1V/Image%202016-06-21%20at%2019.16.24.png)
 
-On the next page, hit Skip Quick Start at the top right corner:
-
-![done](http://cl.ly/3L3S3Q172H3s/Image%202016-06-21%20at%2019.08.32.png)
-
 Finally, copy the App ID and App Secret from the next screen:
 
 ![app ID](http://cl.ly/0I32171G2I1z/Image%202016-06-21%20at%2019.09.38.png)

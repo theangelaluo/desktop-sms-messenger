@@ -45,8 +45,6 @@ Then tap My Apps at the top right corner, and then Add a New App:
 
 Enter a name such as "Double Message" and tap Create New Facebook App ID:
 
-![Name](http://cl.ly/3y2a1A3G0O0P/Image%202016-06-21%20at%2019.07.36.png)
-
 Enter an email address and pick a category on the next screen and tap Create App
 ID:
 

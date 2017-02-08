@@ -43,14 +43,12 @@ Then tap My Apps at the top right corner, and then Add a New App:
 
 ![My apps](http://cl.ly/1S3I0e2B1e0e/Image%202016-06-21%20at%2019.07.05.png)
 
-Enter a name such as "Double Message" and tap Create New Facebook App ID:
-
-Enter a name such as "Double Message" and an email address and pick a category then tap Create App
+Enter a name such as "Double Message" along with an email address. You will also need to pick a category then tap Create App
 ID:
 
 ![](http://cl.ly/3E1J172y0U1H/Image%202016-06-21%20at%2019.08.03.png)
 
-Respond to the captcha, then select "Add Product" on the left sidebar select "Facebook Login" proceed by choosing Website as the platform and under Site URL enter:
+Respond to the captcha, then proceed by clicking "Add Product" on the left sidebar. Select "Facebook Login" choosing Website as the platform and when prompted for a Site URL enter:
 
     http://localhost:3000:
 

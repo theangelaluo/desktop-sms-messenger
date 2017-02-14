@@ -50,7 +50,7 @@ ID:
 
 Respond to the captcha, then proceed by clicking "Add Product" on the left sidebar. Select "Facebook Login" choosing Website as the platform and when prompted for a Site URL enter:
 
-    http://localhost:3000:
+    http://localhost:3000
 
 ![Platform](http://cl.ly/1t3T2M1w3H06/Image%202016-06-21%20at%2019.07.16.png)
 

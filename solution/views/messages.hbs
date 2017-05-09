@@ -1,6 +1,11 @@
 <h3>Messages with {{contact.name}}</h3>
-<ul>
+<div class="col">
 {{#each messages}}
-  <li>{{content}} (via {{channel}})</li>
+  {{#if from}}
+  <div class="row">{{content}} (<b>{{status}}</b> to {{contact.name}} via {{channel}}: {{formattedDate}})</div>
+  {{else}}
+  <div class="row sent">{{content}} (<b>{{status}}</b> to {{contact.name}} via {{channel}}: {{formattedDate}})</div>
+  {{/if}}
 {{/each}}
-</ul>
+</div>
+<a class="btn btn-primary" href="/contacts">Back to Contacts</a>

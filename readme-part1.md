@@ -3,17 +3,18 @@
 ## Contents
 
 - [Goal](#goal)
-- [Step 1. Create and edit contacts](#step-1-create-and-edit-contacts)
+- [Step 1: Create and edit contacts](#step-1-create-and-edit-contacts)
 - [Step 2: User accounts and login](#step-2-user-accounts-and-login)
 - [Step 3: Sending a text message to a contact](#step-3-sending-a-text-message-to-a-contact)
-- [Step 4: Receiving text messages by webhooks](#step-4-receiving-text-messages-by-webhooks)
+- [Step 4: Pushing your app to Heroku](#step-5-Pushing-your-app-to-Heroku)
+- [Step 5: Receiving text messages by webhooks](#step-5-receiving-text-messages-by-webhooks)
 - [Bonus](#bonus)
 
 ## Goal
 
 In this exercise, you're going to build a basic personal relationship manager (PRM) app called Double Message. The app will allow you to see and manage conversations with a list of people via SMS from a single view. Today, you will be doing the first half of this with SMS. This means, by the end of the day, you will be able to send and receive text messages from your browser!
 
-Tomorrow we'll add Facebook authentication using OAuth and a few other features, like importing your Facebook contact list, in [Part 2](./readme-part2.md).
+Tomorrow, in [Part 2](./readme-part2.md), we'll add Facebook & Twitter authentication using OAuth and a few other features.
 
 You will be working in the `double-message` folder. Make sure you create `models/connect.js` with your Mongo connection string as you have done before.
 
@@ -318,7 +319,9 @@ From here, click your Phone Number to edit details about actions related to the 
 Scroll down to Messaging and add your Heroku URL with your route to `/messages/receive` to the "Webhook" field of
 Incoming Message. Don't forget to Save, and you're good to go! Try texting your Twilio number to verify that your endpoint works!
 
-## Getting portfolio-ready (a bonus you should try!)
+## Bonus
+
+### Getting portfolio-ready (a bonus you should try!)
 
 If you really want to start making this project one that is user-ready (and therefore portfolio ready), we would recommend the following (in prioritized order):
 

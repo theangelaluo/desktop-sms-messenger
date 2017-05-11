@@ -19,3 +19,7 @@ a {
 .center {
   text-align: center;
 }
+
+.oauth-buttons {
+  margin: 10px 0;
+}

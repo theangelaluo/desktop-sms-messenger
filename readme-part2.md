@@ -5,17 +5,20 @@
 ## Contents
 
 - [Goal](#goal)
-- [Step 5. Facebook login](#step-5-facebook-login)
+- [Step 6: Facebook login](#Step-6-Facebook-login)
+- [Step 7. Facebook Profile Picture](#Step-7-Facebook-Profile-Picture)
+- [Step 8: Set up a Twitter Dev Account](#Step-8-Set-up-a-Twitter-Dev-Account)
+- [Step 9: Twitter OAuth](#Step-9-Twitter-OAuth)
 - [BONUS](#bonus)
 
 ## Goal
 
 In Part 2, you're going to add some awesome new features and functionality to your Double Message app:
 
-- Facebook login (using OAuth)
-- Load contact list from Facebook
+- Facebook & Twitter login (using OAuth)
+- Ability to load profile picture and name from Facebook and Twitter
 
-## Step 6. Facebook login
+## Step 6: Facebook login
 
 Right now it's only possible to login to your app using a username and password, but lots of modern apps allow users to login using credentials from another site such as Facebook, Google, Twitter, etc. This happens using the [OAuth 2.0](http://oauth.net/2/) protocol as discussed in class this morning. These sites, such as Facebook, act as _identity providers_. Let's add the ability for a user to login to our app using Facebook.
 
@@ -95,7 +98,7 @@ The final step is to add a button or a link on the login page that says "Login w
 
 Congrats, you have successfully set up Facebook OAuth! Now let's move on to getting access to the list of Facebook friends using Double Message.
 
-## Step 7. Facebook Profile Picture
+## Step 7: Facebook Profile Picture
 
 This step will walk you through displaying your profile picture & your username on the Home Page of your Application.
 
@@ -121,6 +124,52 @@ Then modify your passport `FacebookStrategy` to store the required data:
 1. Run your Node App and make sure it works. A potential example can be found below:
 
 ![](images/7_picture.png)
+
+## Step 8: Set up a Twitter Dev Account
+
+This step will walk you through creating your Twitter App, so that we can use Twitter OAuth to log in our users.
+
+1. Navigate to [https://apps.twitter.com/](https://apps.twitter.com/)
+
+1. Click on __Create New App__
+
+    ![1_apps]
+
+1. Fill out the Application details and click on __Create your Twitter application__
+
+    _Note that your Callback URL should be localhost:3000 if you are testing the App locally, and a Heroku URL otherwise_
+
+    ![2_create]
+
+1. We're almost done, but now we have to make sure the App has access to direct messages. Go to the __Keys and Access Tokens__ tab, and click on __Change App Permissions__
+
+    ![3_button]
+
+1. Make sure __Read, Write, and Access direct messages__ is selected
+
+    ![4_permissions]
+
+1. Click on __Update Settings__
+
+1. Add the following to your `env` (they can be found on the __Keys and Access Tokens__ tab)
+
+    - `TWITTER_CONSUMER_KEY`
+    - `TWITTER_CONSUMER_SECRET`
+
+[1_apps]: ./images/1_app_overview.png
+[2_create]: ./images/2_create.png
+[3_button]: ./images/3_permissions_button.png
+[4_permissions]: ./images/4_permissions.png
+
+## Step 9: Twitter OAuth
+
+The goal of this step is to implement Twitter OAuth in your Application. You will be using the [passport-twitter](https://github.com/jaredhanson/passport-twitter) package. Notice that it is implemented similarly to `passport-facebook`, so the instructions regarding Facebook OAuth and the docs for `passport-twitter` should be all you need to complete this section.
+
+#### Goal
+
+![](./images/2_twitterLogin.png)
+
+![](./images/1_twitterButton.png)
 
 ## BONUS
 

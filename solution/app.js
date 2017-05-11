@@ -7,6 +7,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook');
+var TwitterStrategy = require('passport-twitter');
 
 var models = require('./models/models');
 var routes = require('./routes/index');
@@ -67,7 +68,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 passport.use(new FacebookStrategy({
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
-    callbackURL: "CALLBACK URL HERE",
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'photos', 'email', 'name', 'friends']
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -77,6 +78,23 @@ passport.use(new FacebookStrategy({
       facebookToken: accessToken,
       pictureURL: profile.photos[0].value,
       friends: profile._json.friends.data
+    }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
+passport.use(new TwitterStrategy({
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    callbackURL: "http://localhost:3000/auth/twitter/callback"
+  },
+  function(token, tokenSecret, profile, cb) {
+    models.User.findOrCreate({ twitterId: profile.id }, {
+      username: profile.displayName,
+      phone: process.env.FROM_PHONE,
+      twitterToken: token,
+      pictureURL: profile.photos[0].value
     }, function (err, user) {
       return cb(err, user);
     });

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -16,9 +16,11 @@
     "mongoose": "^4.5.1",
     "mongoose-findorcreate": "^1.0.1",
     "morgan": "~1.6.1",
+    "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
     "request": "^2.72.0",
     "twilio": "^3.0.0"
   }

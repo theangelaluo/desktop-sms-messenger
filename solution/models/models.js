@@ -25,7 +25,9 @@ var userSchema = mongoose.Schema({
   facebookId: String,
   facebookToken: String,
   pictureURL: String,
-  friends: Object
+  friends: Object,
+  twitterId: String,
+  twitterToken: String
 });
 userSchema.plugin(findOrCreate);
 

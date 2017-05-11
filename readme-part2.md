@@ -5,10 +5,10 @@
 ## Contents
 
 - [Goal](#goal)
-- [Step 6: Facebook login](#Step-6-Facebook-login)
-- [Step 7. Facebook Profile Picture](#Step-7-Facebook-Profile-Picture)
-- [Step 8: Create a Twitter App](#Step-8-Create-a-Twitter-App)
-- [Step 9: Twitter OAuth](#Step-9-Twitter-OAuth)
+- [Step 6: Facebook login](#step-6-facebook-login)
+- [Step 7. Facebook Profile Picture](#step-7-facebook-profile-picture)
+- [Step 8: Create a Twitter App](#step-8-create-a-twitter-app)
+- [Step 9: Twitter OAuth](#step-9-twitter-oauth)
 - [BONUS](#bonus)
 
 ## Goal

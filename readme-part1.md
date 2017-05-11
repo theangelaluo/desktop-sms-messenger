@@ -205,7 +205,7 @@ For `POST /messages/send/:contactId`, you'll have to use [Twilio's Node client](
 
 ## Step 4: Pushing your app to Heroku
 
-In order to set up Webhooks in [Step 5](#Step-5:-Receiving-Text-Messages-by-Webhooks) you will need a Heroku url. Let's walk through pushing your app to Heroku.
+In order to set up Webhooks in [Step 5](step-5-receiving-text-messages-by-webhooks) you will need a Heroku url. Let's walk through pushing your app to Heroku.
 
 1. Make sure your app runs locally without errors
 1. Download the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) (command line interface). You need this to be able to use heroku in your terminal

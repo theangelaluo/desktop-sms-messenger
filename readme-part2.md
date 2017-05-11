@@ -7,7 +7,7 @@
 - [Goal](#goal)
 - [Step 6: Facebook login](#Step-6-Facebook-login)
 - [Step 7. Facebook Profile Picture](#Step-7-Facebook-Profile-Picture)
-- [Step 8: Set up a Twitter Dev Account](#Step-8-Set-up-a-Twitter-Dev-Account)
+- [Step 8: Create a Twitter App](#Step-8-Create-a-Twitter-App)
 - [Step 9: Twitter OAuth](#Step-9-Twitter-OAuth)
 - [BONUS](#bonus)
 
@@ -125,9 +125,11 @@ Then modify your passport `FacebookStrategy` to store the required data:
 
 ![](images/7_picture.png)
 
-## Step 8: Set up a Twitter Dev Account
+## Step 8: Create a Twitter App
 
 This step will walk you through creating your Twitter App, so that we can use Twitter OAuth to log in our users.
+
+__Disclaimer__: you will need a Twitter account to go through the following steps.
 
 1. Navigate to [https://apps.twitter.com/](https://apps.twitter.com/)
 

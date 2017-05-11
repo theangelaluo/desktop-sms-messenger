@@ -184,10 +184,10 @@ The goal of this step is to implement Twitter OAuth in your Application. You wil
 
 Add the following to OAuth:
 
-- If a user who is already registered using Facebook subsequently tries to
+- If a user who is already registered using Facebook/Twitter subsequently tries to
   register using a username and password.
 - If a user registers with a username and password, then subsequently tries to
-  register, or log in, using Facebook.
+  register, or log in, using Facebook/Twitter.
 - If a user who is already registered with a username and password wants to link
-  their Facebook account so that they can log in using Facebook in the future.
-- If a user wants to unlink their Facebook account.
+  their Facebook/Twitter account so that they can log in using Facebook/Twitter in the future.
+- If a user wants to unlink their Facebook/Twitter account.

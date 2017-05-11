@@ -167,11 +167,11 @@ __Disclaimer__: you will need a Twitter account to go through the following step
 
 The goal of this step is to implement Twitter OAuth in your Application. You will be using the [passport-twitter](https://github.com/jaredhanson/passport-twitter) package. Notice that it is implemented similarly to `passport-facebook`, so the instructions regarding Facebook OAuth and the docs for `passport-twitter` should be all you need to complete this section.
 
-#### Goal
-
-![](./images/2_twitterLogin.png)
+### Goal
 
 ![](./images/1_twitterButton.png)
+
+![](./images/2_twitterLogin.png)
 
 ## BONUS
 

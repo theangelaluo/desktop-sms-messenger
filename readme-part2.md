@@ -203,7 +203,7 @@ Now let's see if it works! Log in via. Twitter and import your contacts. Below a
 
 ![](./images/twitter_imported.png)
 
-## BONUS
+## Bonus
 
 - [Send messages in bulk to many users at a
   time](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g11476959af_5_167)

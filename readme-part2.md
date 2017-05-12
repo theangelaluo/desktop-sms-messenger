@@ -182,9 +182,7 @@ The goal of this step is to implement Twitter OAuth in your Application. You wil
     npm i -S twitter
     ```
 
-    ![](./images/empty_twitter_contacts.png)
-
-1. Add a `followers` key to User model (it will be of type `Object` as it's an array)
+1. Add a `followers` key to your `User` model (it will be of type `Object` as it's an array)
 
 1. Make sure you have access to the `twitterToken` and `twitterTokenSecret` in `req.user` (as you will need these values when using the `twitter` npm module in the next step)
 
@@ -203,7 +201,7 @@ Now let's see if it works! Log in via. Twitter and import your contacts. Below a
 
 ![](./images/twitter_empty.png)
 
-![](./images/twitter_imported)
+![](./images/twitter_imported.png)
 
 ## BONUS
 

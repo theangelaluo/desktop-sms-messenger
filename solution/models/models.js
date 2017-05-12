@@ -27,7 +27,9 @@ var userSchema = mongoose.Schema({
   pictureURL: String,
   friends: Object,
   twitterId: String,
-  twitterToken: String
+  twitterToken: String,
+  twitterTokenSecret: String,
+  followers: Object
 });
 userSchema.plugin(findOrCreate);
 

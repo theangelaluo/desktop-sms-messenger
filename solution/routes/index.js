@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
+var Twitter = require('twitter');
 
 var accountSid = process.env.ACCOUNT_SID;
 var authToken = process.env.AUTH_TOKEN;
@@ -166,6 +167,22 @@ router.post('/messages/send/:id', function(req, res, next) {
         res.redirect('/messages/' + req.params.id)
       });
       })
+  });
+});
+
+router.get('/twitter/import', function(req, res, next) {
+  var client = new Twitter({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: req.user.twitterToken,
+    access_token_secret: req.user.twitterTokenSecret
+  });
+
+  client.get('followers/list.json?count=200', function(err, response) {
+    User.findOneAndUpdate({twitterId: req.user.twitterId}, {$set: {followers: response.users}}, {new: true}, function(err, user) {
+      if (err) console.log(err);
+      res.redirect('/contacts');
+    });
   });
 });
 

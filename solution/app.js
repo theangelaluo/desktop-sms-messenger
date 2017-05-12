@@ -75,7 +75,7 @@ passport.use(new FacebookStrategy({
     models.User.findOrCreate({ facebookId: profile.id }, {
       username: profile.displayName,
       phone: process.env.FROM_PHONE,
-      facebookToken: accessToken,
+      // facebookToken: accessToken,
       pictureURL: profile.photos[0].value,
       friends: profile._json.friends.data
     }, function (err, user) {
@@ -93,8 +93,9 @@ passport.use(new TwitterStrategy({
     models.User.findOrCreate({ twitterId: profile.id }, {
       username: profile.displayName,
       phone: process.env.FROM_PHONE,
+      pictureURL: profile.photos[0].value,
       twitterToken: token,
-      pictureURL: profile.photos[0].value
+      twitterTokenSecret: tokenSecret
     }, function (err, user) {
       return cb(err, user);
     });

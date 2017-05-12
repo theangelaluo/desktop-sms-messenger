@@ -9,6 +9,7 @@
 - [Step 7. Facebook Profile Picture](#step-7-facebook-profile-picture)
 - [Step 8: Create a Twitter App](#step-8-create-a-twitter-app)
 - [Step 9: Twitter OAuth](#step-9-twitter-oauth)
+- [Step 10: Import Twitter Following (Friends)](#step-10-import-twitter-following)
 - [BONUS](#bonus)
 
 ## Goal
@@ -172,6 +173,37 @@ The goal of this step is to implement Twitter OAuth in your Application. You wil
 ![](./images/1_twitterButton.png)
 
 ![](./images/2_twitterLogin.png)
+
+## Step 10: Import Twitter Following
+
+1. Install the [`twitter`](https://www.npmjs.com/package/twitter) `npm` package. We will use this package to make requests against Twitter's API.
+
+    ```bash
+    npm i -S twitter
+    ```
+
+    ![](./images/empty_twitter_contacts.png)
+
+1. Add a `followers` key to User model (it will be of type `Object` as it's an array)
+
+1. Make sure you have access to the `twitterToken` and `twitterTokenSecret` in `req.user` (as you will need these values when using the `twitter` npm module in the next step)
+
+1. In your `routes/index.js` add the `/twitter/import` route. Make sure you...
+    - Using the [`twitter` npm module](https://www.npmjs.com/package/twitter), make a `GET` request to `followers/list.json?count=200` (we will only be displaying the first 200 followers for the purposes of this Application)
+    - Via the `findOneAndUpdate` method, look up the current user in the `User` model and set the `followers` key to the array of users returned by Twitter's API
+    - Make sure to redirect back to `/contacts` once the follower data has been saved to the model
+
+1. __IF__ the user is logged in using Twitter, add the following to `contacts.hbs` (_example below_):
+    - __Followers on Twitter__ section: should contain Screen Name, User ID, Open Chat Button, and Send Message Button (empty initially)
+    - __Import Twitter Followers__ button that links to the `/twitter/import` route
+
+### Testing
+
+Now let's see if it works! Log in via. Twitter and import your contacts. Below are screenshots displaying what your page should look like with this additional functionality. Next let's figure out how to Direct Message these Twitter users.
+
+![](./images/twitter_empty.png)
+
+![](./images/twitter_imported)
 
 ## BONUS
 

@@ -22,6 +22,7 @@
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
     "request": "^2.72.0",
-    "twilio": "^3.0.0"
+    "twilio": "^3.0.0",
+    "twitter": "^1.7.0"
   }
 }

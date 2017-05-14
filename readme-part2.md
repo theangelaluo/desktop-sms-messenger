@@ -11,6 +11,7 @@
 - [Step 9: Twitter OAuth](#step-9-twitter-oauth)
 - [Step 10: Import Twitter Following (Friends)](#step-10-import-twitter-following)
 - [Step 11: Import Twitter Messages](#step-11-import-twitter-messages)
+- [Step 12: Send Twitter Messages](#step-12-send-twitter-messages)
 - [BONUS](#bonus)
 
 ## Goal

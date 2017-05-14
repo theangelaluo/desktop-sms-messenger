@@ -20,6 +20,7 @@ In Part 2, you're going to add some awesome new features and functionality to yo
 
 - Facebook & Twitter login (using OAuth)
 - Ability to load profile picture and name from Facebook and Twitter
+- Direct Message users via. Twitter
 
 ## Step 6: Facebook login
 
@@ -229,9 +230,11 @@ This is the final step, we're almost done! We will be using the [`POST /direct_m
 
 ### Goal
 
-![](./images/twitter_send1)
+Send Message:
+![](./images/twitter_send1.png)
 
-![](./images/twitter_send2)
+Redirect to `/twitter/messages` once message sent:
+![](./images/twitter_send2.png)
 
 ## Bonus
 

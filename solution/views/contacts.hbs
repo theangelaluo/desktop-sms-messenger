@@ -24,6 +24,7 @@
 {{#if user.twitterId}}
 <hr />
 <h3>Followers on Twitter</h3>
+<td><a class="btn btn-primary" href="/twitter/messages">Show All Messages</a></td>
 <table class="table table-hover">
   <thead>
     <td><b>Screen Name</b></td>
@@ -35,8 +36,7 @@
     <tr>
       <td><img class="twitter-thumbnail" src="{{profile_image_url_https}}"/>{{screen_name}}</td>
       <td>{{id_str}}</td>
-      <td><a class="btn btn-primary" href="/messages/{{id}}">Open chat</a></td>
-      <td><a class="btn btn-primary" href="/messages/send/{{id}}">Send message</a></td>
+      <td><a class="btn btn-primary" href="/twitter/messages/send/{{id}}">Send message</a></td>
     </tr>
   {{/each}}
   </tbody>

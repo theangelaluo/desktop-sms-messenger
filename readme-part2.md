@@ -10,6 +10,7 @@
 - [Step 8: Create a Twitter App](#step-8-create-a-twitter-app)
 - [Step 9: Twitter OAuth](#step-9-twitter-oauth)
 - [Step 10: Import Twitter Following (Friends)](#step-10-import-twitter-following)
+- [Step 11: Import Twitter Messages](#step-11-import-twitter-messages)
 - [BONUS](#bonus)
 
 ## Goal
@@ -192,7 +193,8 @@ The goal of this step is to implement Twitter OAuth in your Application. You wil
     - Make sure to redirect back to `/contacts` once the follower data has been saved to the model
 
 1. __IF__ the user is logged in using Twitter, add the following to `contacts.hbs` (_example below_):
-    - __Followers on Twitter__ section: should contain Screen Name, User ID, Open Chat Button, and Send Message Button (empty initially)
+    - __Show All Messages__ button: This will show you all direct messages sent & received for your Twitter user
+    - __Followers on Twitter__ section: should contain Screen Name, User ID, and Send Message Button (empty initially)
     - __Import Twitter Followers__ button that links to the `/twitter/import` route
 
 ### Testing
@@ -202,6 +204,33 @@ Now let's see if it works! Log in via. Twitter and import your contacts. Below a
 ![](./images/twitter_empty.png)
 
 ![](./images/twitter_imported.png)
+
+## Step 11: Import Twitter Messages
+
+1. Link the __Show All Messages__ button to `/twitter/messages` in `contacts.hbs`
+1. Create a `GET /twitter/messages` endpoint: This endpoint will use the `twitter` npm module to perform `GET` requests to `/direct_messages` _(all received messages)_ and `/direct_messages/sent` _(all sent messages)_
+    - use `console.log()` to look at what the responses looks like
+    - you need to __combine__ the responses from the two endpoints and sort them by time
+    - render `twitterMessages.hbs` and pass in the combined array of messages
+1. Create a view called `twitterMessages.hbs`
+    - __NOTE__ that you can either create this view or modify the existing `messages.hbs` file to work with Twitter DMs
+
+### Goal
+
+![](./images/twitter_dms.png)
+
+## Step 12: Send Twitter Messages
+
+This is the final step, we're almost done! We will be using the [`POST /direct_messages/new`](https://dev.twitter.com/rest/reference/post/direct_messages/new) endpoint to send DMs to users. Let's see if you can do this step by yourself! We have given you an outline of what you will need to do for this step below:
+
+- Create a `GET /twitter/messages/send/:id` route: Looks for the specified follower given the `id` in params, and renders `newMessage.hbs` for that follower (you will need the screen name)
+- Create a `POST /twitter/messages/send/:id` route: Performs `POST /direct_messages/new` to send the message to the appropriate user (your `POST` must include `screen_name` and `text`)
+
+### Goal
+
+![](./images/twitter_send1)
+
+![](./images/twitter_send2)
 
 ## Bonus
 

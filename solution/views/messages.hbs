@@ -1,5 +1,13 @@
-<h3>Messages with {{contact.name}}</h3>
+{{#if twitter}}
+<h3>Direct Messages</h3>
 <div class="col">
+{{#each messages}}
+  <div class="row"><img src="{{sender.profile_image_url}}"/> <b>{{sender.screen_name}}:</b> {{text}} (<b>Tweet</b> to <span class="sent">{{recipient_screen_name}}</span> at {{created_at}})</div>
+{{/each}}
+<a class="btn btn-primary" href="/contacts">Back to Contacts</a>
+</div>
+{{else}}
+<h3>Messages with {{contact.name}}</h3>
 {{#each messages}}
   {{#if from}}
   <div class="row">{{content}} (<b>{{status}}</b> to {{contact.name}} via {{channel}}: {{formattedDate}})</div>
@@ -7,5 +15,6 @@
   <div class="row sent">{{content}} (<b>{{status}}</b> to {{contact.name}} via {{channel}}: {{formattedDate}})</div>
   {{/if}}
 {{/each}}
-</div>
 <a class="btn btn-primary" href="/contacts">Back to Contacts</a>
+</div>
+{{/if}}

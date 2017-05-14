@@ -142,6 +142,19 @@ router.get('/messages/send/:id', function(req, res, next) {
   });
 });
 
+router.get('/twitter/messages/send/:id', function(req, res, next) {
+  User.findOne({twitterId: req.user.twitterId}, function(err, user) {
+    user.followers.forEach((follower) => {
+      if(follower.id_str === req.params.id) {
+        console.log(follower);
+        res.render('newMessage', {
+          contact: follower
+        });
+      }
+    });
+  });
+});
+
 router.post('/messages/send/:id', function(req, res, next) {
   Contact.findById(req.params.id, function(err, contact) {
     if (err) return next(err);
@@ -170,6 +183,18 @@ router.post('/messages/send/:id', function(req, res, next) {
   });
 });
 
+router.post('/twitter/messages/send/:id', function(req, res, next) {
+  var client = new Twitter({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: req.user.twitterToken,
+    access_token_secret: req.user.twitterTokenSecret
+  });
+  client.post('/direct_messages/new', {text: req.body.message, screen_name: req.body.channel}, function(err, response) {
+    res.redirect('/twitter/messages');
+  });
+});
+
 router.get('/twitter/import', function(req, res, next) {
   var client = new Twitter({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -182,6 +207,30 @@ router.get('/twitter/import', function(req, res, next) {
     User.findOneAndUpdate({twitterId: req.user.twitterId}, {$set: {followers: response.users}}, {new: true}, function(err, user) {
       if (err) console.log(err);
       res.redirect('/contacts');
+    });
+  });
+});
+
+router.get('/twitter/messages', function(req, res, next) {
+  var client = new Twitter({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: req.user.twitterToken,
+    access_token_secret: req.user.twitterTokenSecret
+  });
+
+  client.get('/direct_messages/sent', function(err, responseSent) {
+    client.get('/direct_messages', function(err, responseReceived) {
+      var dms = [...responseSent, ...responseReceived];
+      dms.sort((a, b) => {
+        if(a.created_at < b.created_at) return 1;
+        else return -1;
+      });
+      
+      res.render('messages', {
+        messages: dms,
+        twitter: true
+      });
     });
   });
 });

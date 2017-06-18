@@ -1,24 +1,17 @@
 var express = require('express');
-var session = require('express-session');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var passport = require('passport');
-var LocalStrategy = require('passport-local');
+var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook');
-var models = require('./models/models');
+var TwitterStrategy = require('passport-twitter');
 
+var models = require('./models/models');
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
-
-// Make sure we have all required env vars. If these are missing it can lead
-// to confusing, unpredictable errors later.
-var REQUIRED_ENV = "FROM_PHONE TWILIO_ACCOUNT_SID TWILIO_AUTH_TOKEN SECRET FB_CLIENT_ID FB_CLIENT_SECRET callbackURL SENDGRID_API_KEY FROM_EMAIL".split(" ");
-REQUIRED_ENV.forEach(function(el) {
-  if (!process.env[el])
-    throw new Error("Missing required env var " + el);
-});
 
 var app = express();
 
@@ -33,11 +26,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport stuff here
+app.use(session({
+  secret: process.env.SECRET
+}));
 
-app.use(session({secret: process.env.SECRET}));
-app.use(passport.initialize());
-app.use(passport.session());
-
+// Tell Passport how to set req.user
 passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
@@ -48,23 +41,23 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-// passport strategy
+// Tell passport how to read our user models
 passport.use(new LocalStrategy(function(username, password, done) {
-    // Find the user with the given username
+  // Find the user with the given username
     models.User.findOne({ username: username }, function (err, user) {
       // if there's an error, finish trying to authenticate (auth failed)
       if (err) {
-        console.error(err);
+        console.log(err);
         return done(err);
       }
       // if no user present, auth failed
       if (!user) {
         console.log(user);
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false);
       }
       // if passwords do not match, auth failed
       if (user.password !== password) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false);
       }
       // auth has has succeeded
       return done(null, user);
@@ -75,14 +68,42 @@ passport.use(new LocalStrategy(function(username, password, done) {
 passport.use(new FacebookStrategy({
     clientID: process.env.FB_CLIENT_ID,
     clientSecret: process.env.FB_CLIENT_SECRET,
-    callbackURL: process.env.callbackURL
+    callbackURL: "http://localhost:3000/auth/facebook/callback",
+    profileFields: ['id', 'displayName', 'photos', 'email', 'name', 'friends']
   },
   function(accessToken, refreshToken, profile, cb) {
-    models.User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+    models.User.findOrCreate({ facebookId: profile.id }, {
+      username: profile.displayName,
+      phone: process.env.FROM_PHONE,
+      // facebookToken: accessToken,
+      pictureURL: profile.photos[0].value,
+      friends: profile._json.friends.data
+    }, function (err, user) {
       return cb(err, user);
     });
   }
 ));
+
+passport.use(new TwitterStrategy({
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    callbackURL: "http://localhost:3000/auth/twitter/callback"
+  },
+  function(token, tokenSecret, profile, cb) {
+    models.User.findOrCreate({ twitterId: profile.id }, {
+      username: profile.displayName,
+      phone: process.env.FROM_PHONE,
+      pictureURL: profile.photos[0].value,
+      twitterToken: token,
+      twitterTokenSecret: tokenSecret
+    }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', auth(passport));
 app.use('/', routes);

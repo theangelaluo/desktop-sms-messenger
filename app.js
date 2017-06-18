@@ -4,11 +4,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var routes = require('./routes/index');
-var auth = require('./routes/auth');
-
 var app = express();
 
 // view engine setup
@@ -24,8 +19,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Passport stuff here
 // YOUR CODE HERE
 
-app.use('/', routes);
 app.use('/', auth(passport));
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

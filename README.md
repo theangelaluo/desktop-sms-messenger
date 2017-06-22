@@ -15,7 +15,7 @@ The README for this exercise is a **two day exercise** divided into two parts:
     ```
     git clone git@github.com:horizons-school-of-technology/double-message.git
     cd double-message
-    git checkout -b YOUR GIT USERNAME
+    git checkout -b YOUR-BRANCH-NAME
     ```
 
 1. [Day 1: Part 1](./readme-part1.md)

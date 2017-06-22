@@ -86,17 +86,17 @@ Let's begin by first creating a model for user:
 	    return done(null, user);
 	  });
 	}));
-	
+
 	app.use(passport.initialize());
 	app.use(passport.session());
 	```
 
 1. Remember to require the `User` model and node modules that you are using:
- 
+
 	```javascript
 	var passport = require('passport');
 	var LocalStrategy = require('passport-local').Strategy;
-	
+
 	var models = require('./models/models');
 	var User = models.User;
 	```
@@ -146,7 +146,7 @@ In this step you will be working in/creating the `views/signup.hbs` and `views/l
   - Redirect to `/login`
 
 > TIP: Remember to require your User model since we are using it in the `POST /signup` route to create a new user.
-> 
+>
 ```javascript
 var models = require('../models/models');
 var User = models.User;
@@ -164,9 +164,9 @@ var User = models.User;
 	```
 
 ### Testing
-We can now test our app by doing `npm start`. Don't forget to do `npm install` beforehand to install other node modules such as `express`.
+We can now test our app by doing `npm start`. Don't forget to do `npm install` beforehand. (This reads your `package.json` and installs other node modules such as `express`.)
 
-- You should be able to register a normal account and login using that normal account. 
+- You should be able to register a normal account and login using that normal account.
 - You should be redirected to `/contacts` upon a successful login with the message: `Successful login`.
 
 ## Step 2: Create and edit contacts
@@ -181,7 +181,7 @@ We're good! Let's move on to creating and editing contacts.
 	- `owner`: Reference to the user who created this contact
 
 	> TIP: `owner` field in the Schema is an object with the following key-value pairs:
-	> 
+	>
 	```
 	type: mongoose.Schema.ObjectId
 	ref: 'User'
@@ -229,7 +229,7 @@ Next, define routes for creating, getting, and updating your contacts through an
 	- Redirect to /contacts
 
 > TIP: Remember to require your Contact model since we are using it to create and update a new contact.
-> 
+>
 ```javascript
 var models = require('../models/models');
 var Contact = models.Contact;
@@ -274,9 +274,9 @@ We will be using [Twilio's Node client](https://www.npmjs.com/package/twilio).
 
 	```javascript
 	// Do not update your tokens here. Do it in env.sh
-	var accountSid = process.env.ACCOUNT_SID; // Your Account SID from www.twilio.com/console
-	var authToken = process.env.AUTH_TOKEN; // Your Auth Token from www.twilio.com/console
-	var fromNumber = process.env.FROM_NUMBER; // Your custom Twilio number
+	var accountSid = process.env.TWILIO_SID; // Your Account SID from www.twilio.com/console
+	var authToken = process.env.TWILIO_AUTH_TOKEN; // Your Auth Token from www.twilio.com/console
+	var fromNumber = process.env.MY_TWILIO_NUMBER; // Your custom Twilio number
 	var twilio = require('twilio');
 	var client = new twilio(accountSid, authToken);
 	```
@@ -284,13 +284,13 @@ We will be using [Twilio's Node client](https://www.npmjs.com/package/twilio).
 1. Now, let's add the following into `env.sh`:
 
 	```bash
-	export ACCOUNT_SID="REPLACE THIS"
-	export AUTH_TOKEN="REPLACE THIS"
-	export FROM_NUMBER="+14151234567"
+	export TWILIO_SID="REPLACE THIS"
+	export TWILIO_AUTH_TOKEN="REPLACE THIS"
+	export MY_TWILIO_NUMBER="+14151234567"
 	```
-	
-	> Replace the `FROM_NUMBER` with an 11-digit phone number given by Twilio, prefixed by a `+` sign. Remember to replace those keys with the ones you obtained from Twilio's website and do `source env.sh` again.
-	
+
+	> Replace the `MY_TWILIO_NUMBER` with an 11-digit phone number given by Twilio, prefixed by a `+` sign. Remember to replace those keys with the ones you obtained from Twilio's website and do `source env.sh` again.
+
 1. Let's move on to our routes. We will use our Twilio API there.
 
 ### Routes for sending message 👮 - `routes/index.js`
@@ -346,7 +346,7 @@ In order to set up Webhooks in [Step 5](step-5-receiving-text-messages-by-webhoo
 1. `heroku login`: Use this command to log in to heroku locally (in terminal)
 1. Navigate to the `double-message` folder on your computer
 1. `heroku create`: This command will create a heroku application, and add `heroku` to your list of git remotes (`heroku` should be displayed when running the command `git remote`)
-1. Use the command `git branch` to find the name of the branch you are currently on (you should __NOT__ be on `master`). If you are on `master`, do `git checkout -b YOUR_BRANCH_NAME_HERE`. Verify that you are on your own branch using `git branch` again.
+1. Use the command `git branch` to find the name of the branch you are currently on (you should __NOT__ be on `master`). If you are on `master`, do `git checkout -b YOUR-BRANCH-NAME-HERE`. Verify that you are on your own branch using `git branch` again.
 1. If you have pending changes, do the following:
 
 	```
@@ -362,14 +362,14 @@ In order to set up Webhooks in [Step 5](step-5-receiving-text-messages-by-webhoo
 	# Comments:
 	#   Execute these commands separately!
 	#   Copy values from env.sh
-	
+
 	heroku config:set MONGODB_URI="MONGODB URI HERE"
-	
-	heroku config:set ACCOUNT_SID="ACCOUNT SID HERE"
-	
-	heroku config:set AUTH_TOKEN="AUTH TOKEN HERE"
-	
-	heroku config:set FROM_NUMBER="FROM NUMBER HERE"
+
+	heroku config:set TWILIO_SID="ACCOUNT SID HERE"
+
+	heroku config:set TWILIO_AUTH_TOKEN="AUTH TOKEN HERE"
+
+	heroku config:set MY_TWILIO_NUMBER="FROM NUMBER HERE"
 	```
 
 1. Now, when you do `heroku config`, you should see 4 config variables.
@@ -378,7 +378,9 @@ In order to set up Webhooks in [Step 5](step-5-receiving-text-messages-by-webhoo
 
 ### Testing
 
-- Feel free to test everything to ensure that your heroku app is working properly.
+- Feel free to test everything that you have done from Step 1 to Step 3 to ensure that your heroku app is working properly.
+
+> TIP: Use `heroku logs --tail` to view the current logs for your Heroku application. If your app crashed and you want to restart it, you can do `heroku restart`.
 
 ## Step 5: Receiving Text Messages by Webhooks
 
@@ -428,11 +430,12 @@ You'll be using [webhooks](https://webhooks.pbworks.com/w/page/13385124/FrontPag
 - `POST /messages/receive` - Your request body will take the properties above, but your route only has to handle:
 	- `Body` - body of message (_careful! it'll live at `req.body.Body`_)
 	- `From` - phone number of sender
+	- `To` - phone number of recipient (It should be the number given by Twilio.)
 
 This is an example of `req.body` when you do `console.log(req.body)` in the callback. (Note that all ids are just placeholders here)
 
 ```
-{ 
+{
     "ToCountry": "US",
     "ToState": "CA",
     "SmsMessageSid": "SM00000000000000000000000000000000",
@@ -455,7 +458,7 @@ This is an example of `req.body` when you do `console.log(req.body)` in the call
 }
 ```
 
-Observe that what we need is just `req.body.Body` and `req.body.From`.
+Observe that what we need is just `req.body.Body`, `req.body.From`, and `req.body.To`.
 
 ### Models changes for receiving text messages 💬 - `models/models.js`
 
@@ -476,15 +479,15 @@ following [these instructions](https://devcenter.heroku.com/articles/git) for de
 don't deploy from `master`! Make sure you have the [Heroku Toolbelt](https://toolbelt.heroku.com)!._
 
 Next, we'll connect Twilio to your backend to send a POST request every time a user sends a text back to your number.
-This requires some Twilio setup beforehand - we'll walk you through that below:    
+This requires some Twilio setup beforehand - we'll walk you through that below:
 
-### Creating your Twilio Number 📞 - `twilio.com`  
+### Creating your Twilio Number 📞 - `twilio.com`
 
 > ⚠️ _**Note:** You may have already have a number from a previous exercise. If that's the case, skip down to Registering
 a Webhook._
 
 Get started by logging into [Twilio](https://twilio.com) and going to your Console (the Twilio user dashboard).
-You should have created an account for a previous exercise, but if not, [register for a trial account here](https://www.twilio.com/try-twilio).  
+You should have created an account for a previous exercise, but if not, [register for a trial account here](https://www.twilio.com/try-twilio).
 
 In your Twilio Console, click on the Phone Numbers tab as displayed below and navigate to Getting Started. Here, you'll be able to create a free phone number using your trial account that will allow you to set webhooks upon different events, like receiving a phone call or a text message!
 

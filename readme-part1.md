@@ -350,7 +350,7 @@ In order to set up Webhooks in [Step 5](step-5-receiving-text-messages-by-webhoo
 1. If you have pending changes, do the following:
 
 	```
-	git add . --all
+	git add --all
 	git commit -m "push to heroku"
 	git status
 	```
@@ -512,7 +512,7 @@ Don't forget to save, __push your changes__ to Heroku, and you're good to go! Tr
 You need to do the following to push your changes to heroku:
 
 ```bash
-git add . --all
+git add --all
 git commit -m "push to heroku"
 git status
 git push heroku your-branch-name:master

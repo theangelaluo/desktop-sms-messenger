@@ -3,8 +3,8 @@
 ## Contents
 
 - [Goal](#goal)
-- [Step 1: Create and edit contacts](#step-1-create-and-edit-contacts)
-- [Step 2: User accounts and login](#step-2-user-accounts-and-login)
+- [Step 1: User accounts and login](#step-1-user-accounts-and-login)
+- [Step 2: Create and edit contacts](#step-2-create-and-edit-contacts)
 - [Step 3: Sending a text message to a contact](#step-3-sending-a-text-message-to-a-contact)
 - [Step 4: Pushing your app to Heroku](#step-5-Pushing-your-app-to-Heroku)
 - [Step 5: Receiving text messages by webhooks](#step-5-receiving-text-messages-by-webhooks)
@@ -16,66 +16,32 @@ In this exercise, you're going to build a basic personal relationship manager (P
 
 Tomorrow, in [Part 2](./readme-part2.md), we'll add Facebook & Twitter authentication using OAuth and a few other features.
 
-You will be working in the `double-message` folder. Make sure you create `models/connect.js` with your Mongo connection string as you have done before.
+You will be working in the `double-message` folder. Create a new file called `env.sh`:
 
-```javascript
-module.exports = "MONGO CONNECTION STRING HERE";
+```bash
+export MONGODB_URI="YOUR MONGODB LINK HERE"
 ```
 
-See [user interface drawings](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit?usp=sharing).
+Let's create a new database on mLab and paste the given link in `env.sh`.
 
-## Step 1: Create and edit contacts
+> TIP: Remember to do `source env.sh`
 
-### Contact Models 👯 - `models/models.js`
+Next, look through the [user interface drawings](https://docs.google.com/presentation/d/1UXsnAr9Vu3s0M3khMnlnYU5V3fCnFGkkbL1pTFIXJu4/edit#slide=id.g1147692423_0_157).
 
-Start by creating models for each contact you will store for a user. Define all your models in a `models.js` file that connects to a MongoDB database (on mLab, for example) and create the following fields:
+## Step 1: User accounts and login
 
-- New model `Contact`
-	- `name`: `String`: Name of the contact
-	- `phone`: `String`: 10-digit number without the `+1` _(ex. (212) 555 1203 becomes 2125551203)_
+### User account model 👥 - `models/models.js`
 
-### Contact Views 🌠 - `views/contacts.hbs`, `views/editContact.hbs`
+Let's begin by first creating a model for user:
 
-In this step you will be working in/creating the `views/contacts.hbs` and `views/editContact.hbs` handlebars files. This is where you will create your views. We've drawn up some wireframes that you should use as reference when creating your frontend for Double Message (they can be found at the links below).
-
-__Remember__ to the have the following elements on your page:
-- __Create new contact__ _Button_
-- __View all messages__ _Button_
-- __Logout__ _Button_
-- List of contacts
-    - Contact name & phone number
-    - __Edit Contact__ _Button_
-		- __Open Chat__ _Button_
-
-[Check out our user interface drawings.](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_28)
-
-- [`views/contacts.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.p): A list of all contacts that the user has created.
-- [`views/editContact.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_133): A form that allows a user to edit contact details for an existing user, or to create a new user.
-
-### Contact Routes 📲 - `routes/index.js`
-
-Next, define routes for creating, getting, and updating your contacts through an Express router inside an `index.js` file. Each route will render the views (which you created earlier) with a context object that loads your models from the database (which you also created earlier).
-
-- `GET /contacts`
-	- Read __current user's__ contacts from Mongoose
-	- Render contacts using `contact.hbs`
-- `GET /contacts/new`
-	- Render `editContact.hbs` with no contact
-- `GET /contacts/:id`
-	- Read contact with id from mongoose
-	- Render `editContact.hbs` with contact
-- `POST /contacts/new`
-	- Create new contact for current user
-	- Redirect to /contacts
-- `POST /contacts/:id`
-	- Update contact with given id
-	- Redirect to /contacts
-
-## Step 2: User accounts and login
+- New model `User`
+	- `username`: `String`: user name
+	- `password`: `String`: password
+	- `phone`: `String`: 10 digit phone number of the user. Used to associate incoming messages.
 
 ### Setting up `passport` 🛂 - `app.js`
 
-1. Install `passport` `passport-local` and `express-session`
+1. Install `passport`, `passport-local` and `express-session`
 
 	```bash
 	npm install --save passport passport-local express-session
@@ -101,46 +67,59 @@ Next, define routes for creating, getting, and updating your contacts through an
 	// Tell passport how to read our user models
 	passport.use(new LocalStrategy(function(username, password, done) {
 	  // Find the user with the given username
-	    User.findOne({ username: username }, function (err, user) {
-	      // if there's an error, finish trying to authenticate (auth failed)
-	      if (err) {
-	        console.log(err);
-	        return done(err);
-	      }
-	      // if no user present, auth failed
-	      if (!user) {
-	        console.log(user);
-	        return done(null, false);
-	      }
-	      // if passwords do not match, auth failed
-	      if (user.password !== password) {
-	        return done(null, false);
-	      }
-	      // auth has has succeeded
-	      return done(null, user);
-	    });
-	  }
-	));
-
+	  User.findOne({ username: username }, function (err, user) {
+	    // if there's an error, finish trying to authenticate (auth failed)
+	    if (err) {
+	      console.log(err);
+	      return done(err);
+	    }
+	    // if no user present, auth failed
+	    if (!user) {
+	      console.log(user);
+	      return done(null, false);
+	    }
+	    // if passwords do not match, auth failed
+	    if (user.password !== password) {
+	      return done(null, false);
+	    }
+	    // auth has has succeeded
+	    return done(null, user);
+	  });
+	}));
+	
 	app.use(passport.initialize());
 	app.use(passport.session());
 	```
 
-### User account model 👥 - `models/models.js`
+1. Remember to require the `User` model and node modules that you are using:
+ 
+	```javascript
+	var passport = require('passport');
+	var LocalStrategy = require('passport-local').Strategy;
+	
+	var models = require('./models/models');
+	var User = models.User;
+	```
 
-- New model `User`
-	- `username`: `String`: user name
-	- `password`: `String`: password
-	- `phone`: `String`: 10 digit phone number of the user. Used to associate incoming messages.
-- Update model `Contact`
-	- new property `owner`: `UserId`: `_id` of the user who created this contact
+1. Now uncomment your routes in `app.js` so that it looks like this:
+
+	```javascript
+	app.use('/', auth(passport));
+	app.use('/', routes);
+	```
 
 ### User account views 🗻 - `views/signup.hbs`, `views/login.hbs`
 
 In this step you will be working in/creating the `views/signup.hbs` and `views/login.hbs` handlebars files. We've drawn up some wireframes that you should use as reference when creating these views (they can be found at the links below).
 
-- [`views/signup.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_161)
-- [`views/login.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_340)
+- [`views/signup.hbs`](https://docs.google.com/presentation/d/1UXsnAr9Vu3s0M3khMnlnYU5V3fCnFGkkbL1pTFIXJu4/edit#slide=id.g1147692423_0_161)
+- [`views/login.hbs`](https://docs.google.com/presentation/d/1UXsnAr9Vu3s0M3khMnlnYU5V3fCnFGkkbL1pTFIXJu4/edit#slide=id.g1147692423_0_340)
+
+#### TIP:
+- `signup.hbs` should have `username`, `password`, and `passwordRepeat` for input text fields.
+- `login.hbs` should have `username` and `password` for input text fields with a login and register button.
+
+> Check the routes below on where to redirect the user to when he or she clicks on those buttons.
 
 ### User routes 🚥 - `routes/auth.js`
 
@@ -160,11 +139,108 @@ In this step you will be working in/creating the `views/signup.hbs` and `views/l
 	- Render `login.hbs`
 - `POST /login`
 	- Pass request onto Passport with `passport.authenticate('local')`
-	- If successful redirect to `/contacts`
-	- If unsuccessful redirect to `/login`
+	- If successful redirect to `/contacts` (TIP: successRedirect)
+	- If unsuccessful redirect to `/login` (TIP: failureRedirect)
 - `GET /logout`
   - Terminate the current session
-	- Redirect to `/login`
+  - Redirect to `/login`
+
+> TIP: Remember to require your User model since we are using it in the `POST /signup` route to create a new user.
+> 
+```javascript
+var models = require('../models/models');
+var User = models.User;
+```
+
+### Contact Routes 📲 - `routes/index.js`
+
+- `GET /contacts`
+
+	```javascript
+	// This is just a test route, we will implement the details later
+	router.get('/contacts', function(req, res) {
+	  res.send('Successful login');
+	});
+	```
+
+### Testing
+We can now test our app by doing `npm start`. Don't forget to do `npm install` beforehand to install other node modules such as `express`.
+
+- You should be able to register a normal account and login using that normal account. 
+- You should be redirected to `/contacts` upon a successful login with the message: `Successful login`.
+
+## Step 2: Create and edit contacts
+
+We're good! Let's move on to creating and editing contacts.
+
+### Contact Models 👯 - `models/models.js`
+
+- New model `Contact`
+	- `name`: `String`: Name of the contact
+	- `phone`: `String`: 10-digit number without the `+1` _(ex. (212) 555 1203 becomes 2125551203)_
+	- `owner`: Reference to the user who created this contact
+
+	> TIP: `owner` field in the Schema is an object with the following key-value pairs:
+	> 
+	```
+	type: mongoose.Schema.ObjectId
+	ref: 'User'
+	```
+
+### Contact Views 🌠 - `views/contacts.hbs`, `views/editContact.hbs`
+
+In this step you will be working in/creating the `views/contacts.hbs` and `views/editContact.hbs` handlebars files. This is where you will create your views. We've drawn up some wireframes that you should use as reference when creating your frontend for Double Message (they can be found at the links below).
+
+__Remember__ to the have the following elements on your `views/contacts.hbs` page:
+
+- List of contacts
+	- Contact name & phone number
+	- __Send Text__ _Button_/_Link_
+	- __View Messages__ _Button_/_Link_
+	- __Edit Contact__ _Button_/_Link_
+- __Add contact__ _Button_/_Link_
+- __View all messages__ _Button_/_Link_
+- __Logout__ _Button_/_Link_
+
+[Check out our user interface drawings.](https://docs.google.com/presentation/d/1UXsnAr9Vu3s0M3khMnlnYU5V3fCnFGkkbL1pTFIXJu4/edit#slide=id.g1147692423_0_157)
+
+- [`views/contacts.hbs`](https://docs.google.com/presentation/d/1UXsnAr9Vu3s0M3khMnlnYU5V3fCnFGkkbL1pTFIXJu4/edit#slide=id.p): A list of all contacts that the user has created.
+- [`views/editContact.hbs`](https://docs.google.com/presentation/d/1UXsnAr9Vu3s0M3khMnlnYU5V3fCnFGkkbL1pTFIXJu4/edit#slide=id.g1147692423_0_133): A form that allows a user to edit contact details for an existing user, or to create a new user.
+
+> Check the routes below on where to redirect the user to when he or she clicks on those buttons/links. For part 2, you do not need to worry about where to redirect users for __Send Text__, __View Messages__, and __View all messages__. We will fix those buttons/links in Part 3.
+
+### Contact Routes 📲 - `routes/index.js`
+
+Next, define routes for creating, getting, and updating your contacts through an Express router inside an `index.js` file. Each route will render the views (which you created earlier) with a context object that loads your models from the database (which you also created earlier).
+
+- `GET /contacts`
+	- Read __current user's__ contacts from Mongoose
+	- Render contacts using `contact.hbs`
+- `GET /contacts/new`
+	- Render `editContact.hbs` with no contact
+- `GET /contacts/:id`
+	- Read contact with id from mongoose
+	- Render `editContact.hbs` with contact
+- `POST /contacts/new`
+	- Create new contact for current user
+	- Redirect to /contacts
+- `POST /contacts/:id`
+	- Update contact with given id
+	- Redirect to /contacts
+
+> TIP: Remember to require your Contact model since we are using it to create and update a new contact.
+> 
+```javascript
+var models = require('../models/models');
+var Contact = models.Contact;
+```
+
+### Testing
+
+- You should be able to create a new contact (or multiple contacts) using the __Add contact__ _Button_/_Link_
+- You should be able to edit existing contacts using the __Edit Contact__ _Button_/_Link_
+- You should be able to logout using the __Logout__ _Button_/_Link_
+- You should be able to view a list of contacts in `http://localhost:3000/contacts`.
 
 ## Step 3: Sending a text message to a contact
 
@@ -173,49 +249,136 @@ In this step you will be working in/creating the `views/signup.hbs` and `views/l
 - `Message`
 	-  `created`: `Date`: when the messages was first created
 	- `content`: `String`: content of the message
-	- `user`: `UserId`: the `_id` of the User this message belongs to
-	- `contact`: `ContactId`: the `_id` of the Contact the message was sent to (or from for incoming)
-	- `channel`: `String`: the channel used to send the message (should be __SMS__)
+	- `user`: Reference to the `User` that this message belongs to
+	- `contact`: Reference to the `Contact` that this message was sent to (or from for incoming message)
+	- `channel`: `String`: the channel used to send the message (should be "__SMS__")
+
+> TIP: Remember how we created a reference field for `owner` in Contact previously? Use the same method for `user` and `contact` here.
 
 ### Views for sending message 📬 - `views/newMessage.hbs`, `views/messages.hbs`
 
 In this step you will be working in/creating the `views/newMessage.hbs` and `views/messages.hbs` handlebars files. We've drawn up some wireframes that you should use as reference when creating these views (they can be found at the links below).
 
-- [`views/newMessage.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_442) Send a new message
-- [`views/messages.hbs`](https://docs.google.com/presentation/d/1vq9b1ENst72z1v0JgxGkhjZA6bggbgCNWO-CNf3zrIc/edit#slide=id.g1147692423_0_230)
+- [`views/newMessage.hbs`](https://docs.google.com/presentation/d/1UXsnAr9Vu3s0M3khMnlnYU5V3fCnFGkkbL1pTFIXJu4/edit#slide=id.g1147692423_0_621) Send a new message
+- [`views/messages.hbs`](https://docs.google.com/presentation/d/1UXsnAr9Vu3s0M3khMnlnYU5V3fCnFGkkbL1pTFIXJu4/edit#slide=id.g1147692423_0_556)
 
-You will use `views/messages.hbs` for both the Conversation Stream (all ingoing and outgoing messages) and the conversation with an individual person.
+You will use `views/messages.hbs` for both the Conversation Stream (View All Messages - all ingoing and outgoing messages) and the conversation with an individual person.
+
+### Setting up Twillio
+
+We will be using [Twilio's Node client](https://www.npmjs.com/package/twilio).
+
+1. Run `npm install twilio --save`
+
+1. In `routes/index.js`, let's configure our twilio node module at the top of the file.
+
+	```javascript
+	// Do not update your tokens here. Do it in env.sh
+	var accountSid = process.env.ACCOUNT_SID; // Your Account SID from www.twilio.com/console
+	var authToken = process.env.AUTH_TOKEN; // Your Auth Token from www.twilio.com/console
+	var fromNumber = process.env.FROM_NUMBER; // Your custom Twilio number
+	var twilio = require('twilio');
+	var client = new twilio(accountSid, authToken);
+	```
+
+1. Now, let's add the following into `env.sh`:
+
+	```bash
+	export ACCOUNT_SID="REPLACE THIS"
+	export AUTH_TOKEN="REPLACE THIS"
+	export FROM_NUMBER="+14151234567"
+	```
+	
+	> Replace the `FROM_NUMBER` with an 11-digit phone number given by Twilio, prefixed by a `+` sign. Remember to replace those keys with the ones you obtained from Twilio's website and do `source env.sh` again.
+	
+1. Let's move on to our routes. We will use our Twilio API there.
 
 ### Routes for sending message 👮 - `routes/index.js`
 
 - `GET /messages`
-	- Read all messages from mongoose
+	- Read all messages from mongoose belonging to user (req.user._id)
 	- Render `messages.hbs` with all messages
+	- You might need to do `populate('contact')` to get the name of contact through messages.
 - `GET /messages/:contactId`
-	- Read messages sent to contactId
+	- Read messages sent to contactId (i.e. contact) belonging to user (req.user._id)
 	- Render `messages.hbs` with messages sent to contact
+	- You might need to do `populate('contact')` to get the name of contact through messages.
 - `GET /messages/send/:contactId`
   - Render `newMessage.hbs` for a form to send a message to a contact by `contactId`
 - `POST /messages/send/:contactId`
-	- Send message with Twilio to the number corresponding to a contact by `contactId`
+	- Send message with Twilio to the number corresponding to a contact by `contactId` (Refer to the tip below)
 	- Create message in mongoose if Twilio is successful
 	- Redirect to `/messages`
 
-For `POST /messages/send/:contactId`, you'll have to use [Twilio's Node client](https://www.npmjs.com/package/twilio) - remember from today? Don't forget to `npm i -S twilio` and to include your `accountSid` and `authToken`. See more documentation on Twilio's Node package here: [https://www.twilio.com/docs/api/rest/sending-messages](https://www.twilio.com/docs/api/rest/sending-messages)
+#### TIP for `POST /messages/send/:contactId`
+
+```javascript
+// We can send a Twilio message using client.messages.create
+
+// We first create an object data with the key body, to, and from.
+var data = {
+  body: req.body.message,
+  to: '+1' + contact.phone, // a 10-digit number
+  from: fromNumber
+};
+
+client.messages.create(data, function(err, msg) {
+  console.log(err, msg);
+
+  // save our Message object and redirect the user here
+});
+```
+
+> See more documentation on Twilio's Node package here: [https://www.twilio.com/docs/libraries/node](https://www.twilio.com/docs/libraries/node)
+
+### Testing
+
+- You should be able to send a message to an existing contact from your application. (Since we are using test accounts, the contact number needs to be your own phone number.)
+- You should be able to view messages sent to a specific contact.
+- You should be able to view all messages sent to everyone.
 
 ## Step 4: Pushing your app to Heroku
 
-In order to set up Webhooks in [Step 5](step-5-receiving-text-messages-by-webhooks) you will need a Heroku url. Let's walk through pushing your app to Heroku.
+In order to set up Webhooks in [Step 5](step-5-receiving-text-messages-by-webhooks) you will need a Heroku URL. Let's walk through pushing your app to Heroku.
 
 1. Make sure your app runs locally without errors
 1. Download the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) (command line interface). You need this to be able to use heroku in your terminal
 1. `heroku login`: Use this command to log in to heroku locally (in terminal)
 1. Navigate to the `double-message` folder on your computer
 1. `heroku create`: This command will create a heroku application, and add `heroku` to your list of git remotes (`heroku` should be displayed when running the command `git remote`)
-1. Use the command `git branch` to find the name of the branch you are currently on (you should __NOT__ be on `master`)
+1. Use the command `git branch` to find the name of the branch you are currently on (you should __NOT__ be on `master`). If you are on `master`, do `git checkout -b YOUR_BRANCH_NAME_HERE`. Verify that you are on your own branch using `git branch` again.
+1. If you have pending changes, do the following:
+
+	```
+	git add --all
+	git commit -m "push to heroku"
+	git status
+	```
+1. Ensure that there are no more pending changes through `git status`.
 1. `git push heroku your-branch-name:master`: This will push your app and all of your changes from `your-branch-name` to your heroku application
+1. Next, we need to copy all our environment variables in `env.sh` to Heroku. For all the key value pairs in env.sh, we need to do `heroku config:set key=value`.
+
+	```
+	# Comments:
+	#   Execute these commands separately!
+	#   Copy values from env.sh
+	
+	heroku config:set MONGODB_URI="MONGODB URI HERE"
+	
+	heroku config:set ACCOUNT_SID="ACCOUNT SID HERE"
+	
+	heroku config:set AUTH_TOKEN="AUTH TOKEN HERE"
+	
+	heroku config:set FROM_NUMBER="FROM NUMBER HERE"
+	```
+
+1. Now, when you do `heroku config`, you should see 4 config variables.
 1. `heroku open`: This should open your `double-message` application in your default web browser
-1. Your app should also be present on your heroku dashboard
+1. Your app should also be present on your heroku dashboard.
+
+### Testing
+
+- Feel free to test everything to ensure that your heroku app is working properly.
 
 ## Step 5: Receiving Text Messages by Webhooks
 
@@ -231,14 +394,9 @@ You'll be using [webhooks](https://webhooks.pbworks.com/w/page/13385124/FrontPag
 </thead>
 <tbody>
 <tr>
-<td align="left">EventType</td>
-<td>string</td>
-<td>always:  "onMessageSend"</td>
-</tr>
-<tr>
-<td align="left">ChannelSid</td>
-<td>string</td>
-<td>Channel Sid identifier of the Channel the Message is being sent to</td>
+<td align="left">...</td>
+<td>...</td>
+<td>...</td>
 </tr>
 <tr>
 <td align="left">Body</td>
@@ -246,22 +404,24 @@ You'll be using [webhooks](https://webhooks.pbworks.com/w/page/13385124/FrontPag
 <td>The body of message</td>
 </tr>
 <tr>
-<td align="left">Attributes</td>
-<td>string, optional, valid JSON structure or null</td>
-<td>stringified JSON structure, can be null if attributes are not present in message entity</td>
-</tr>
-<tr>
 <td align="left">From</td>
 <td>string</td>
-<td>The author of the message</td>
+<td>A string containing an 11-digit number with the +1 prefix.</td>
 </tr>
 <tr>
-<td align="left">DateCreated</td>
-<td>date string</td>
-<td>The timestamp of creation of the message</td>
+<td align="left">To</td>
+<td>string</td>
+<td>A string containing an 11-digit number with the +1 prefix.</td>
+</tr>
+<tr>
+<td align="left">...</td>
+<td>...</td>
+<td>...</td>
 </tr>
 </tbody>
 </table>
+
+> Do refer to the JSON document below for an example of `req.body`.
 
 ### Creating a route for your webhook 🚚 - `routes/index.js`
 
@@ -269,16 +429,44 @@ You'll be using [webhooks](https://webhooks.pbworks.com/w/page/13385124/FrontPag
 	- `Body` - body of message (_careful! it'll live at `req.body.Body`_)
 	- `From` - phone number of sender
 
+This is an example of `req.body` when you do `console.log(req.body)` in the callback. (Note that all ids are just placeholders here)
+
+```
+{ 
+    "ToCountry": "US",
+    "ToState": "CA",
+    "SmsMessageSid": "SM00000000000000000000000000000000",
+    "NumMedia": "0",
+    "ToCity": "",
+    "FromZip": "94104",
+    "SmsSid": "SM00000000000000000000000000000000",
+    "FromState": "CA",
+    "SmsStatus": "received",
+    "FromCity": "SAN FRANCISCO",
+    "Body": "Hello",
+    "FromCountry": "US",
+    "To": "+14159876543", // Number obtained from Twilio
+    "ToZip": "",
+    "NumSegments": "1",
+    "MessageSid": "SM00000000000000000000000000000000",
+    "AccountSid": "AC00000000000000000000000000000000",
+    "From": "+14151234567", // My phone number
+    "ApiVersion": "2010-04-01"
+}
+```
+
+Observe that what we need is just `req.body.Body` and `req.body.From`.
+
 ### Models changes for receiving text messages 💬 - `models/models.js`
 
 - Update `Message` model
 	- New field `status`: `String`: indicate whether this message was sent or received
 		- `sent`: this message has been sent to Twilio
 		- `received`: this message has been received by Twilio
-	- New field `from`: `String`: 10 digit phone number string. This field will be empty for messages that are sent.
-		- ex. (212) 555-1234 becomes "12125551234"
+	- New field `from`: `String`: 10 digit phone number string. This field will be __empty__ for messages that are sent.
+		- ex. (212) 555-1234 becomes "2125551234"
 
-	__Note__: Be sure to modify the code for `POST /messages/send/:id` to account for the above fields. You should also alter your frontend to display the `from` property.
+	__Note__: Be sure to modify the code for `POST /messages/send/:contactId` to account for the above fields. You should also alter your frontend to display the `from` property.
 
 ### Setting up Twilio
 
@@ -317,7 +505,22 @@ From here, click your Phone Number to edit details about actions related to the 
 <img src="http://f.cl.ly/items/043U0k0w230S3Z100C3y/Image%202016-06-21%20at%208.02.54%20AM.png" width="500">
 
 Scroll down to Messaging and add your Heroku URL with your route to `/messages/receive` to the "Webhook" field of
-Incoming Message. Don't forget to Save, and you're good to go! Try texting your Twilio number to verify that your endpoint works!
+Incoming Message (i.e. `A MESSAGE COMES IN`). It should look like `https://project-name.herokuapp.com/messages/receive`
+
+Don't forget to save, __push your changes__ to Heroku, and you're good to go! Try texting your Twilio number to verify that your endpoint works!
+
+You need to do the following to push your changes to heroku:
+
+```bash
+git add --all
+git commit -m "push to heroku"
+git status
+git push heroku your-branch-name:master
+```
+
+### Testing
+
+- You should be able to send a message to your Twilio phone number from your own phone and view it through your application.
 
 ## Bonus
 

@@ -143,7 +143,7 @@ In this step you will be working in/creating the `views/signup.hbs` and `views/l
 	- If unsuccessful redirect to `/login` (TIP: failureRedirect)
 - `GET /logout`
   - Terminate the current session
-	- Redirect to `/login`
+  - Redirect to `/login`
 
 > TIP: Remember to require your User model since we are using it in the `POST /signup` route to create a new user.
 > 

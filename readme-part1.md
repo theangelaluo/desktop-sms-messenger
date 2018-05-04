@@ -6,7 +6,7 @@
 - [Step 1: User accounts and login](#step-1-user-accounts-and-login)
 - [Step 2: Create and edit contacts](#step-2-create-and-edit-contacts)
 - [Step 3: Sending a text message to a contact](#step-3-sending-a-text-message-to-a-contact)
-- [Step 4: Pushing your app to Heroku](#step-5-Pushing-your-app-to-Heroku)
+- [Step 4: Pushing your app to Heroku](#step-4-pushing-your-app-to-heroku)
 - [Step 5: Receiving text messages by webhooks](#step-5-receiving-text-messages-by-webhooks)
 - [Bonus](#bonus)
 
@@ -344,6 +344,7 @@ In order to set up Webhooks in [Step 5](step-5-receiving-text-messages-by-webhoo
 1. Make sure your app runs locally without errors
 1. Download the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) (command line interface). You need this to be able to use heroku in your terminal
 1. `heroku login`: Use this command to log in to heroku locally (in terminal)
+      * **For Windows Users:** This command will **not** work in Git Bash, so you will need to run this command through the Windows Command Prompt. Once you log in, you should return to using git bash for the remaining commands. 
 1. Navigate to the `double-message` folder on your computer
 1. `heroku create`: This command will create a heroku application, and add `heroku` to your list of git remotes (`heroku` should be displayed when running the command `git remote`)
 1. Use the command `git branch` to find the name of the branch you are currently on (you should __NOT__ be on `master`). If you are on `master`, do `git checkout -b YOUR-BRANCH-NAME-HERE`. Verify that you are on your own branch using `git branch` again.

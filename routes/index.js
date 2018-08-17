@@ -14,13 +14,14 @@ var client = new twilio(accountSid, authToken);
 
 router.post('/messages/receive', function(req, res, next) {
   User.findOne({phone: req.body.To}, function(err, user) {
+    if (err) console.log(err);
     Contact.findOne({phone: req.body.From}, function(err, contact) {
-      if(err) return next(err);
+      if(err) console.log(err);
       var message = new Message({
         created: new Date(),
         content: req.body.Body,
-        user: user.id,
-        contact: contact.id,
+        user: user._id,
+        contact: contact._id,
         from: req.body.From,
         status: 'Received',
         channel: 'SMS'

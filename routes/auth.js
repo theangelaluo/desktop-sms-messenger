@@ -22,7 +22,8 @@ module.exports = function(passport) {
     if (req.body.username && req.body.password && (req.body.password === req.body.passwordRepeat)) {
       var user = new User({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        phone: req.body.phone
       });
       user.save(function(err) {
         if (err) {

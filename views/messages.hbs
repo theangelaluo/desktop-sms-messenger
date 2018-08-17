@@ -1,7 +1,7 @@
 <h3 style="margin:10px">Messages with {{contact.name}}</h3>
 {{#each messages}}
   {{#if from}}
-  <div style="margin:10px" class="row">{{content}} (<b>{{contact.name}} {{status}}</b> via {{channel}}: {{formattedDate}})</div>
+  <div style="margin:10px" class="row">{{content}} (<b>{{status}}</b> via {{channel}}: {{formattedDate}})</div>
   {{else}}
   <div style="margin:10px" class="row sent">{{content}} (<b>{{status}}</b> to {{contact.name}} via {{channel}}: {{formattedDate}})</div>
   {{/if}}

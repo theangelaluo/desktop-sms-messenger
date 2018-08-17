@@ -24,10 +24,53 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport stuff here
 // YOUR CODE HERE
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+var models = require('./models/models');
+var User = models.User;
+
+var session = require('express-session');
+app.use(session({secret: 'keyboard cat'}));
+
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  })
+});
+
+passport.use(new LocalStrategy(function(username, password, done) {
+  // Find the user with the given username
+  User.findOne({ username: username }, function (err, user) {
+    // if there's an error, finish trying to authenticate (auth failed)
+    if (err) {
+      console.log(err);
+      return done(err);
+    }
+    // if no user present, auth failed
+    if (!user) {
+      console.log(user);
+      return done(null, false);
+    }
+    // if passwords do not match, auth failed
+    if (user.password !== password) {
+      return done(null, false);
+    }
+    // auth has has succeeded
+    return done(null, user);
+  });
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Uncomment these out after you have implemented passport in step 1
-// app.use('/', auth(passport));
-// app.use('/', routes);
+app.use('/', auth(passport));
+app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,51 @@
+<h2 class="center"><img src="{{user.pictureURL}}" /> Logged in as {{user.username}}</h2>
+<h3>SMS Contacts</h3>
+<table class="table table-hover">
+  <thead>
+    <td><b>Name</b></td>
+    <td><b>Phone</b></td>
+    <td><b>Actions</b></td>
+  </thead>
+  <tbody>
+{{#each contacts}}
+  <tr>
+    <td>{{name}}</td>
+    <td>{{phone}}</td>
+    <td><a class="btn btn-default" href="/contacts/{{_id}}">Edit contact</a></td>
+    <td><a class="btn btn-primary" href="/messages/{{_id}}">Open chat</a></td>
+    <td><a class="btn btn-primary" href="/messages/send/{{_id}}">Send message</a></td>
+  </tr>
+{{/each}}
+  </tbody>
+</table>
+<a class="btn btn-primary" href="/contacts/new">Create new contact</a>
+<a class="btn btn-primary" href="/messages">View all messages</a>
+
+{{#if user.twitterId}}
+<hr />
+<h3>Followers on Twitter</h3>
+<td><a class="btn btn-primary" href="/twitter/messages">Show All Messages</a></td>
+<table class="table table-hover">
+  <thead>
+    <td><b>Screen Name</b></td>
+    <td><b>User ID</b></td>
+    <td><b>Actions</b></td>
+  </thead>
+  <tbody>
+  {{#each user.followers}}
+    <tr>
+      <td><img class="twitter-thumbnail" src="{{profile_image_url_https}}"/>{{screen_name}}</td>
+      <td>{{id_str}}</td>
+      <td><a class="btn btn-primary" href="/twitter/messages/send/{{id}}">Send message</a></td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+
+<a class="btn btn-primary" href="/twitter/import">Import Twitter Followers</a>
+
+<br />
+<hr />
+{{/if}}
+
+<a class="btn btn-primary btn-danger" href="/logout">Logout</a>

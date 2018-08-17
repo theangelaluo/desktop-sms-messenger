@@ -13,7 +13,7 @@ var twilio = require('twilio');
 var client = new twilio(accountSid, authToken);
 
 router.post('/messages/receive', function(req, res, next) {
-  User.findOne({phone: req.body.To}, function(err, user) {
+  User.findOne({phone: req.body.From}, function(err, user) {
     console.log(req.body.To);
     if (err) console.log(err);
     console.log(user);

@@ -12,6 +12,27 @@ var fromNumber = process.env.MY_TWILIO_NUMBER; // Your custom Twilio number
 var twilio = require('twilio');
 var client = new twilio(accountSid, authToken);
 
+router.post('/messages/receive', function(req, res, next) {
+  User.findOne({phone: req.body.To}, function(err, user) {
+    Contact.findOne({phone: req.body.From}, function(err, contact) {
+      if(err) return next(err);
+      var message = new Message({
+        created: new Date(),
+        content: req.body.Body,
+        user: user.id,
+        contact: contact.id,
+        from: req.body.From,
+        status: 'Received',
+        channel: 'SMS'
+      });
+      message.save(function(err) {
+        if(err) return next(err);
+        res.send("Thanks Twilio <3");
+      });
+    })
+  });
+});
+
 /* GET home page. */
 router.get('/contacts', function(req, res, next) {
   User.findById(req.user, function(err, user) {

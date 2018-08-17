@@ -28,8 +28,9 @@ router.post('/messages/receive', function(req, res, next) {
         status: 'Received',
         channel: 'SMS'
       });
-      message.save(function(err) {
-        if(err) return next(err);
+      Message.save(function(err) {
+        if(err) console.log(err);
+        console.log('saving the message');
         res.send("Thanks Twilio <3");
       });
     })

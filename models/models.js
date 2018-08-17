@@ -51,6 +51,12 @@ var messageSchema = new mongoose.Schema({
   channel: {
     type: String,
     default: "SMS"
+  },
+  status: {
+    type: String,
+  },
+  from: {
+    type: String
   }
 });
 

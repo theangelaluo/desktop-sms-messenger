@@ -151,7 +151,7 @@ router.post('/messages/send/:id', function(req, res) {
     });
 
     client.messages.create({
-      to: "+1" + contact.phone,
+      to: contact.phone,
       from: process.env.MY_TWILIO_NUMBER,
       body: req.body.message
     }, function(err, msg) {

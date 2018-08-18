@@ -5,6 +5,7 @@ var Contact = models.Contact;
 var User = models.User;
 var Message = models.Message;
 var moment = require('moment');
+var passport = require('passport');
 
 var accountSid = process.env.TWILIO_SID; // Your Account SID from www.twilio.com/console
 var authToken = process.env.TWILIO_AUTH_TOKEN; // Your Auth Token from www.twilio.com/console

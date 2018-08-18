@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
+var FacebookStrategy = require('passport-facebook');
 
 // require node modules here
 // YOUR CODE HERE
@@ -64,6 +65,18 @@ passport.use(new LocalStrategy(function(username, password, done) {
     return done(null, user);
   });
 }));
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "https://warm-savannah-11054.herokuapp.com/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ facebookId: profile.id }, { phone: process.env.MY_TWILIO_NUMBER }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
 
 app.use(passport.initialize());
 app.use(passport.session());

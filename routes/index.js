@@ -12,6 +12,17 @@ var fromNumber = process.env.MY_TWILIO_NUMBER; // Your custom Twilio number
 var twilio = require('twilio');
 var client = new twilio(accountSid, authToken);
 
+router.get('/auth/facebook', passport.authenticate('facebook'));
+
+router.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  }
+);
+
+
 router.post('/messages/receive', function(req, res, next) {
   User.findOne({phone: req.body.To}, function(err, user) {
     console.log(req.body.To);

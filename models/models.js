@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var connect = process.env.MONGODB_URI;
+var findOrCreate = require('mongoose-findorcreate');
 
 // If you're getting an error here, it's probably because
 // your connect string is not defined or incorrect.
@@ -16,6 +17,9 @@ var userSchema = new mongoose.Schema({
     type: String,
   },
   phone: {
+    type: String
+  },
+  facebookId: {
     type: String
   }
 });
@@ -59,6 +63,8 @@ var messageSchema = new mongoose.Schema({
     type: String
   }
 });
+
+userSchema.plugin(findOrCreate);
 
 // Step 2: Create all of your models here, as properties.
 var User = mongoose.model('User', userSchema);

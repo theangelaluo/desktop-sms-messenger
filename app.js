@@ -8,8 +8,6 @@ var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var FacebookStrategy = require('passport-facebook');
 
-// require node modules here
-// YOUR CODE HERE
 
 var app = express();
 
@@ -24,7 +22,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport stuff here
-// YOUR CODE HERE
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 

@@ -21,6 +21,9 @@ var userSchema = new mongoose.Schema({
   },
   facebookId: {
     type: String
+  },
+  pictureUrl: {
+    type: String
   }
 });
 

@@ -69,10 +69,11 @@ passport.use(new LocalStrategy(function(username, password, done) {
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "https://warm-savannah-11054.herokuapp.com/auth/facebook/callback"
+    callbackURL: "https://warm-savannah-11054.herokuapp.com/auth/facebook/callback",
+    profileFields: ['id', 'displayName', 'photos']
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOrCreate({ facebookId: profile.id }, { phone: process.env.MY_TWILIO_NUMBER }, function (err, user) {
+    User.findOrCreate({ facebookId: profile.id }, { phone: process.env.MY_TWILIO_NUMBER, pictureUrl: profile.photos[0].value, username: profile.displayName }, function (err, user) {
       return cb(err, user);
     });
   }
